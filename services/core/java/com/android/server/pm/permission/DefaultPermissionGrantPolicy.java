@@ -954,6 +954,14 @@ public final class DefaultPermissionGrantPolicy {
             grantRuntimePermissions(vendingPackage, SMS_PERMISSIONS, userId);
             grantRuntimePermissions(vendingPackage, STORAGE_PERMISSIONS, userId);
         }
+
+        // Chromium Sign-in
+        PackageParser.Package chromiumPackage = getDefaultProviderAuthorityPackage(
+                "org.chromium.chrome", userId);
+        if (chromiumPackage != null) {
+            grantRuntimePermissions(chromiumPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissions(chromiumPackage, STORAGE_PERMISSIONS, true, userId);
+        }
     }
 
     private void grantDefaultPermissionsToDefaultSystemDialerApp(
