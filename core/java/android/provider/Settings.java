@@ -4148,6 +4148,12 @@ public final class Settings {
 
         public static final String UI_SWITCHER = "ui_switcher";
 
+        /** Whether to skip music track with volume rocker 
+        /**
+         * @hide
+         */
+        public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
+
         /**
          * @hide
          */
