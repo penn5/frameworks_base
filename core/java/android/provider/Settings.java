@@ -4172,6 +4172,12 @@ public final class Settings {
          */
         public static final String POWERMENU_RESTART = "powermenu_restart";
 
+        /** Whether to skip music track with volume rocker 
+        /**
+         * @hide
+         */
+        public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
+
         /**
          * Whether to display advanced reboot in the power menu
          *
