@@ -322,6 +322,10 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             public boolean showBeforeProvisioning() {
                 return false;
             }
+
+            public boolean onLongPress() {
+                return false;
+            }
         };
         onAirplaneModeChanged();
 
@@ -456,7 +460,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         OnItemLongClickListener onItemLongClickListener = (parent, view, position, id) -> {
             final Action action = mAdapter.getItem(position);
             if (action instanceof LongPressAction) {
-                mDialog.dismiss();
+                //mDialog.dismiss();
                 return ((LongPressAction) action).onLongPress();
             }
             return false;
@@ -492,10 +496,11 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         @Override
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-            if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+            /*if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+                mDialog.dismiss();
                 mWindowManagerFuncs.reboot(true);
                 return true;
-            }
+            }*/
             return false;
         }
 
@@ -525,6 +530,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
             if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+                mDialog.dismiss();
                 mWindowManagerFuncs.reboot(true);
                 return true;
             }
@@ -1291,7 +1297,8 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public boolean onLongPress() {
-            return true;
+            // pass to onClick listener (onPress action)
+            return false;
         }
 
         public boolean isEnabled() {
