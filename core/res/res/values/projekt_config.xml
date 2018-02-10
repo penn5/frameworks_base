@@ -19,4 +19,8 @@
     <!-- True if the notifications should dynamically tint the app icon -->
     <bool name="config_allowNotificationIconTinting">true</bool>
 
+    <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
+         backgrounds -->
+    <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
+
 </resources>
