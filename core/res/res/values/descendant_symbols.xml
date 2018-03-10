@@ -31,6 +31,7 @@
   <!-- Fastscroller -->
   <java-symbol type="color" name="fastscroller_text_color" />
 
+  <!-- Reboot strings -->
   <java-symbol type="string" name="reboot_to_recovery_title" />
   <java-symbol type="string" name="reboot_to_recovery_message" />
   <java-symbol type="string" name="reboot_to_bootloader_title" />
@@ -40,5 +41,10 @@
 
   <!-- Wallpaper component -->
   <java-symbol type="string" name="default_wallpaper_component_custom" />
+
+  <!-- Forcefully tint notification icon text -->
+  <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
+  <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
+  <java-symbol type="bool" name="config_notificationTinting_override" />
 
 </resources>
