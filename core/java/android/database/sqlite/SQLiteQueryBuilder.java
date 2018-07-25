@@ -400,7 +400,7 @@ public class SQLiteQueryBuilder
             db.validateSql(unwrappedSql, cancellationSignal); // will throw if query is invalid
 
             // Execute wrapped query for extra protection
-            final String wrappedSql = buildQuery(projectionIn, "(" + selection + ")", groupBy,
+            final String wrappedSql = buildQuery(projectionIn, wrap(selection), groupBy,
                     having, sortOrder, limit);
             sql = wrappedSql;
         } else {
