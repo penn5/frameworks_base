@@ -38,4 +38,6 @@ interface IAlarmManager {
     long getNextWakeFromIdleTime();
     AlarmManager.AlarmClockInfo getNextAlarmClock(int userId);
     long currentNetworkTimeMillis();
+    // blocked alarms support
+    String getSeenAlarms();
 }
