@@ -4086,8 +4086,6 @@ public final class Settings {
 
         /** @hide */
         private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = BOOLEAN_VALIDATOR;
-        public static final String WAKELOCK_BLOCKING_ENABLED = "wakelock_blocking_enabled";
-        public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
