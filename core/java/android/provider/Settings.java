@@ -4084,10 +4084,6 @@ public final class Settings {
          */
         public static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
-        //DescendantAlarms
-        public static final String ALARM_BLOCKING_LIST = "alarm_blocking_list";
-        public static final String ALARM_BLOCKING_ENABLED = "alarm_blocking_enabled";
-
         /** @hide */
         private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = BOOLEAN_VALIDATOR;
         public static final String WAKELOCK_BLOCKING_ENABLED = "wakelock_blocking_enabled";
