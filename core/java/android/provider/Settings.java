@@ -4121,6 +4121,12 @@ public final class Settings {
         public static final String SYSTEM_THEME_STYLE = "system_theme_style";
 
         /**
+         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
