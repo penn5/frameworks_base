@@ -275,7 +275,7 @@ import com.android.internal.policy.KeyguardDismissCallback;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.descendant.descendantUtils;
+import com.android.internal.util.descendant.DescendantUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.widget.PointerLocationView;
