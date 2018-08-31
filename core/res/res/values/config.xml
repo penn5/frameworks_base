@@ -2617,6 +2617,7 @@
         <item>restart</item>
         <item>lockdown</item>
         <item>logout</item>
+        <item>torch</item>
         <item>airplane</item>
         <item>settings</item>
         <item>users</item>
