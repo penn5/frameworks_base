@@ -479,7 +479,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_RESTART_RECOVERY, 1) == 1) {
-                    mItems.add(new AdvancedRestartAction());
+                    mItems.add(new PowerAction());
                 }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
@@ -1537,12 +1537,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             }
         }
     };
-
-    private ToggleAction.State getUpdatedAirplaneToggleState() {
-        return (Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.AIRPLANE_MODE_ON, 0) == 1) ?
-                ToggleAction.State.On : ToggleAction.State.Off;
-    }
 
     private ToggleAction.State getUpdatedAirplaneToggleState() {
         return (Settings.Global.getInt(mContext.getContentResolver(),
