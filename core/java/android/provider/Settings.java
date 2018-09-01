@@ -12232,13 +12232,6 @@ public final class Settings {
                 "max_sound_trigger_detection_service_ops_per_day";
 
         /**
-         * Volume rocker wake
-         * @hide
-         */
-        public static final String VOLUME_ROCKER_WAKE = "volume_rocker_wake";
-
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
