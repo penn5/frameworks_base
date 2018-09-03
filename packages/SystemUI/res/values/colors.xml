@@ -167,4 +167,8 @@
 
     <!-- Logout button -->
     <color name="logout_button_bg_color">#ccffffff</color>
+
+    <!-- Brightness warning -->
+    <color name="warning_max_brightness">#e43904</color>
+
 </resources>
