@@ -36,7 +36,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.InputDevice;
 import android.view.InputQueue;
