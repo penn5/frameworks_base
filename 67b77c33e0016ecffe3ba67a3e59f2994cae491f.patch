@@ -1,0 +1,306 @@
+From 67b77c33e0016ecffe3ba67a3e59f2994cae491f Mon Sep 17 00:00:00 2001
+From: bryan2894 <bryan2894@gmail.com>
+Date: Thu, 10 Nov 2016 01:37:27 -0500
+Subject: [PATCH] SystemUI: add more buttons to NavBar Tuner
+
+@mydongistiny:
+ -Updated for 8.1 with N Tuner
+ -Fixed buttons for ButtonDispatcher
+ -Added new search drawble
+Change-Id: I69ddeadb66b4ada6ff17e07258f9fd7d6f00d6e2
+Signed-off-by: mydongistiny <jaysonedson@gmail.com>
+---
+ .../res/drawable/ic_sysbar_search_default.xml |  9 ++++
+ .../res/layout/menu_ime_always_show.xml       | 43 +++++++++++++++++++
+ packages/SystemUI/res/layout/search.xml       | 26 +++++++++++
+ .../SystemUI/res/values/custom_strings.xml    |  4 ++
+ .../phone/NavigationBarInflaterView.java      |  6 +++
+ .../statusbar/phone/NavigationBarView.java    | 21 +++++++++
+ .../android/systemui/tuner/NavBarEditor.java  | 10 ++++-
+ .../android/systemui/tuner/NavBarTuner.java   |  2 +
+ 8 files changed, 119 insertions(+), 2 deletions(-)
+ create mode 100644 packages/SystemUI/res/drawable/ic_sysbar_search_default.xml
+ create mode 100644 packages/SystemUI/res/layout/menu_ime_always_show.xml
+ create mode 100644 packages/SystemUI/res/layout/search.xml
+
+diff --git a/packages/SystemUI/res/drawable/ic_sysbar_search_default.xml b/packages/SystemUI/res/drawable/ic_sysbar_search_default.xml
+new file mode 100644
+index 00000000000..5b03b37d701
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/ic_sysbar_search_default.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++        android:height="24dp"
++        android:width="24dp"
++        android:viewportWidth="24.0"
++        android:viewportHeight="24.0">
++    <path
++        android:fillColor="?attr/singleToneColor"
++        android:pathData="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
++</vector>
+diff --git a/packages/SystemUI/res/layout/menu_ime_always_show.xml b/packages/SystemUI/res/layout/menu_ime_always_show.xml
+new file mode 100644
+index 00000000000..a87a0b55156
+--- /dev/null
++++ b/packages/SystemUI/res/layout/menu_ime_always_show.xml
+@@ -0,0 +1,43 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2016 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:systemui="http://schemas.android.com/apk/res-auto"
++    android:layout_width="@dimen/navigation_side_padding"
++    android:layout_height="match_parent"
++    android:layout_weight="0"
++    >
++    <com.android.systemui.statusbar.policy.KeyButtonView
++        android:id="@+id/menu_always_show"
++        android:layout_width="@dimen/navigation_extra_key_width"
++        android:layout_height="match_parent"
++        android:layout_marginEnd="2dp"
++        android:scaleType="centerInside"
++        systemui:keyCode="82"
++        systemui:playSound="false"
++        android:visibility="visible"
++        android:contentDescription="@string/accessibility_menu"
++        />
++    <com.android.systemui.statusbar.policy.KeyButtonView
++        android:id="@+id/ime_switcher"
++        android:layout_width="@dimen/navigation_extra_key_width"
++        android:layout_height="match_parent"
++        android:layout_marginEnd="2dp"
++        android:visibility="invisible"
++        android:contentDescription="@string/accessibility_ime_switch_button"
++        android:scaleType="centerInside"
++        />
++</FrameLayout>
+diff --git a/packages/SystemUI/res/layout/search.xml b/packages/SystemUI/res/layout/search.xml
+new file mode 100644
+index 00000000000..635aa99d6c2
+--- /dev/null
++++ b/packages/SystemUI/res/layout/search.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2016 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<com.android.systemui.statusbar.policy.KeyButtonView
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:systemui="http://schemas.android.com/apk/res-auto"
++    android:id="@+id/search"
++    android:layout_width="@dimen/navigation_extra_key_width"
++    android:layout_height="match_parent"
++    android:layout_weight="0"
++    systemui:keyCode="84"
++    android:scaleType="center"
++    android:contentDescription="@string/accessibility_key" />
++
+diff --git a/packages/SystemUI/res/values/custom_strings.xml b/packages/SystemUI/res/values/custom_strings.xml
+index 5d26ab83edc..2a27fca5264 100644
+--- a/packages/SystemUI/res/values/custom_strings.xml
++++ b/packages/SystemUI/res/values/custom_strings.xml
+@@ -101,4 +101,8 @@
+     <string name="navbar_editor_title">Editor</string>
+     <string name="navbar_editor_summary">Configure navigaton bar</string>
+ 
++    <!-- NavBar Tuner -->
++    <string name="menu_ime_always_show">Menu / Keyboard Switcher (always show)</string>
++    <string name="search">Search</string>
++
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
+index f45918b63e3..037840cba0a 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
+@@ -60,9 +60,11 @@
+     public static final String NAV_BAR_RIGHT = "sysui_nav_bar_right";
+ 
+     public static final String MENU_IME_ROTATE = "menu_ime";
++    public static final String MENU_IME_ALWAYS_SHOW = "menu_ime_always_show";
+     public static final String BACK = "back";
+     public static final String HOME = "home";
+     public static final String RECENT = "recent";
++    public static final String SEARCH = "search";
+     public static final String NAVSPACE = "space";
+     public static final String CLIPBOARD = "clipboard";
+     public static final String KEY = "key";
+@@ -404,6 +406,10 @@ private View createView(String buttonSpec, ViewGroup parent, LayoutInflater infl
+             v = inflater.inflate(R.layout.recent_apps, parent, false);
+         } else if (MENU_IME_ROTATE.equals(button)) {
+             v = inflater.inflate(R.layout.menu_ime, parent, false);
++        } else if (MENU_IME_ALWAYS_SHOW.equals(button)) {
++            v = inflater.inflate(R.layout.menu_ime_always_show, parent, false);
++        } else if (SEARCH.equals(button)) {
++            v = inflater.inflate(R.layout.search, parent, false);
+         } else if (NAVSPACE.equals(button)) {
+             v = inflater.inflate(R.layout.nav_key_space, parent, false);
+         } else if (CLIPBOARD.equals(button)) {
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java
+index c5698fa0ce5..f729e9f9d77 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java
+@@ -127,6 +127,7 @@
+     private KeyButtonDrawable mDockedIcon;
+     private KeyButtonDrawable mImeIcon;
+     private KeyButtonDrawable mMenuIcon;
++    private KeyButtonDrawable mSearchIcon;
+     private KeyButtonDrawable mAccessibilityIcon;
+     private TintedKeyButtonDrawable mRotateSuggestionIcon;
+ 
+@@ -295,6 +296,8 @@ public NavigationBarView(Context context, AttributeSet attrs) {
+         mButtonDispatchers.put(R.id.home, new ButtonDispatcher(R.id.home));
+         mButtonDispatchers.put(R.id.recent_apps, new ButtonDispatcher(R.id.recent_apps));
+         mButtonDispatchers.put(R.id.menu, new ButtonDispatcher(R.id.menu));
++        mButtonDispatchers.put(R.id.menu_always_show, new ButtonDispatcher(R.id.menu_always_show));
++        mButtonDispatchers.put(R.id.search, new ButtonDispatcher(R.id.search));
+         mButtonDispatchers.put(R.id.ime_switcher, new ButtonDispatcher(R.id.ime_switcher));
+         mButtonDispatchers.put(R.id.accessibility_button,
+                 new ButtonDispatcher(R.id.accessibility_button));
+@@ -417,6 +420,10 @@ public ButtonDispatcher getMenuButton() {
+         return mButtonDispatchers.get(R.id.menu);
+     }
+ 
++    public ButtonDispatcher getMenuAlwaysShowButton() {
++        return mButtonDispatchers.get(R.id.menu_always_show);
++    }
++
+     public ButtonDispatcher getBackButton() {
+         return mButtonDispatchers.get(R.id.back);
+     }
+@@ -429,6 +436,10 @@ public ButtonDispatcher getImeSwitchButton() {
+         return mButtonDispatchers.get(R.id.ime_switcher);
+     }
+ 
++    public ButtonDispatcher getSearchButton() {
++        return mButtonDispatchers.get(R.id.search);
++    }
++
+     public ButtonDispatcher getAccessibilityButton() {
+         return mButtonDispatchers.get(R.id.accessibility_button);
+     }
+@@ -495,6 +506,7 @@ private void updateIcons(Context ctx, Configuration oldConfig, Configuration new
+             mBackIcon = getBackDrawable(lightContext, darkContext);
+             mRecentIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_recent);
+             mMenuIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_menu);
++            mSearchIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_search_default);
+ 
+             mAccessibilityIcon = getDrawable(lightContext, darkContext,
+                     R.drawable.ic_sysbar_accessibility_button, false /* hasShadow */);
+@@ -649,6 +661,8 @@ public void updateNavButtonIcons() {
+         // Update menu button, visibility logic in method
+         setMenuVisibility(mShowMenu, true);
+         getMenuButton().setImageDrawable(mMenuIcon);
++        getSearchButton().setImageDrawable(mSearchIcon);
++        getMenuAlwaysShowButton().setImageDrawable(mMenuIcon);
+ 
+         // Update rotate button, visibility altered by a11y button logic
+         getRotateSuggestionButton().setImageDrawable(mRotateSuggestionIcon);
+@@ -666,6 +680,8 @@ public void updateNavButtonIcons() {
+ 
+         boolean disableBack = ((mDisabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0) && !useAltBack;
+ 
++        final boolean disableSearch = ((mDisabledFlags & View.STATUS_BAR_DISABLE_SEARCH) != 0);
++
+         // When screen pinning, don't hide back and home when connected service or back and
+         // recents buttons when disconnected from launcher service in screen pinning mode,
+         // as they are used for exiting.
+@@ -695,6 +711,7 @@ public void updateNavButtonIcons() {
+         getBackButton().setVisibility(disableBack      ? View.INVISIBLE : View.VISIBLE);
+         getHomeButton().setVisibility(disableHome      ? View.INVISIBLE : View.VISIBLE);
+         getRecentsButton().setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
++        getSearchButton().setVisibility(disableSearch ? View.INVISIBLE : View.VISIBLE);
+     }
+ 
+     public boolean inScreenPinning() {
+@@ -812,8 +829,12 @@ public void setMenuVisibility(final boolean show, final boolean force) {
+                 !mShowAccessibilityButton &&
+                 !mShowRotateButton &&
+                 ((mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) == 0);
++        final boolean shouldShowAlwaysMenu = (mNavigationIconHints &
++                StatusBarManager.NAVIGATION_HINT_IME_SHOWN) == 0;
+ 
+         getMenuButton().setVisibility(shouldShow ? View.VISIBLE : View.INVISIBLE);
++        getMenuAlwaysShowButton().setVisibility(shouldShowAlwaysMenu ? View.VISIBLE : View.INVISIBLE);
++        getSearchButton().setVisibility(shouldShowAlwaysMenu ? View.VISIBLE : View.INVISIBLE);
+     }
+ 
+     public void setAccessibilityButtonState(final boolean visible, final boolean longClickable) {
+diff --git a/packages/SystemUI/src/com/android/systemui/tuner/NavBarEditor.java b/packages/SystemUI/src/com/android/systemui/tuner/NavBarEditor.java
+index 1329ec9ae99..22e30b326ad 100644
+--- a/packages/SystemUI/src/com/android/systemui/tuner/NavBarEditor.java
++++ b/packages/SystemUI/src/com/android/systemui/tuner/NavBarEditor.java
+@@ -63,10 +63,12 @@
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_CODE_END;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_CODE_START;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_IMAGE_DELIM;
+-import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME;
++import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ROTATE;
++import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ALWAYS_SHOW;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAVSPACE;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAV_BAR_VIEWS;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.RECENT;
++import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SEARCH;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SIZE_MOD_END;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SIZE_MOD_START;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.WEIGHT_SUFFIX;
+@@ -185,6 +187,10 @@ private static CharSequence getLabel(String button, Context context) {
+             return context.getString(R.string.left);
+         } else if (button.startsWith(RIGHT)) {
+             return context.getString(R.string.right);
++        } else if (button.equals(MENU_IME_ALWAYS_SHOW)) {
++            return context.getString(R.string.menu_ime_always_show);
++        } else if (button.startsWith(SEARCH)) {
++            return context.getString(R.string.search);
+         /*} else if (button.equals(MENU_IME)) {
+             return context.getString(R.string.menu_ime);*/
+         /*} else if (button.startsWith(CLIPBOARD)) {
+@@ -409,7 +415,7 @@ public boolean onTouch(View v, MotionEvent event) {
+ 
+         private void showAddDialog(final Context context) {
+             final String[] options = new String[] {
+-                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT
++                    BACK, HOME, RECENT, MENU_IME_ALWAYS_SHOW, SEARCH, NAVSPACE, LEFT, RIGHT
+             };
+             final CharSequence[] labels = new CharSequence[options.length];
+             for (int i = 0; i < options.length; i++) {
+diff --git a/packages/SystemUI/src/com/android/systemui/tuner/NavBarTuner.java b/packages/SystemUI/src/com/android/systemui/tuner/NavBarTuner.java
+index 4a01a61ae8b..4d56e5fa2ec 100644
+--- a/packages/SystemUI/src/com/android/systemui/tuner/NavBarTuner.java
++++ b/packages/SystemUI/src/com/android/systemui/tuner/NavBarTuner.java
+@@ -19,10 +19,12 @@
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_CODE_START;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_IMAGE_DELIM;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ROTATE;
++import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ALWAYS_SHOW;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAVSPACE;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAV_BAR_LEFT;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAV_BAR_RIGHT;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAV_BAR_VIEWS;
++import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SEARCH;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.extractButton;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.extractImage;
+ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.extractKeycode;
