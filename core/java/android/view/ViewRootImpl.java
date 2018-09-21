@@ -69,6 +69,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.telephony.TelephonyManager;
 import android.util.AndroidRuntimeException;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -5142,14 +5143,19 @@ public final class ViewRootImpl implements ViewParent,
              IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
             boolean isGestureButtonEnabled = false;
             boolean isKeyguardOn = false;
+	    final TelephonyManager mTelephonyManager;
+	    mTelephonyManager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+	    int CallState = 0;
             try {
                 isGestureButtonEnabled = wm.isGestureButtonEnabled();
                 isKeyguardOn = wm.isKeyguardLocked();
+		CallState = mTelephonyManager.getCallState();
             } catch (RemoteException ex) {
                 isGestureButtonEnabled = false;
                 isKeyguardOn = false;
             }
-            if (isGestureButtonEnabled && !isKeyguardOn) {
+            if (isGestureButtonEnabled) {
+		if ((isKeyguardOn && CallState == TelephonyManager.CALL_STATE_OFFHOOK) || (!isKeyguardOn)) {
                 if (event.getPointerCount() == 1) {
                     action = event.getActionMasked();
                     rotation = 0;
@@ -5288,6 +5294,7 @@ public final class ViewRootImpl implements ViewParent,
                     }
                 }
             }
+	}
 
             mAttachInfo.mUnbufferedDispatchRequested = false;
             mAttachInfo.mHandlingPointerEvent = true;
