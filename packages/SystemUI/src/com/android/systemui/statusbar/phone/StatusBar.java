@@ -499,7 +499,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             update();
         }
-         @Override
+	@Override
         public void onChange(boolean selfChange) {
             update();
         }
@@ -5438,6 +5438,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACCENT_PICKER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -5451,12 +5454,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                 unloadAccents();
                 updateAccents();
             }
-            update();
+	    else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
+                setLockscreenDoubleTapToSleep();
+            }
+		update();
 	}
 
         public void update() {
              ContentResolver resolver = mContext.getContentResolver();
              updateTheme();
+             setLockscreenDoubleTapToSleep();
         }
     }
 
@@ -5483,6 +5491,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
     };
+
+    private void setLockscreenDoubleTapToSleep() {
+        if (mStatusBarWindow != null) {
+            mStatusBarWindow.setLockscreenDoubleTapToSleep();
+        }
+    }
 
     @Override
     public void onNotificationClicked(StatusBarNotification sbn, ExpandableNotificationRow row) {

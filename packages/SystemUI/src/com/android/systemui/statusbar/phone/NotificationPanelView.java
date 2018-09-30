@@ -40,7 +40,9 @@ import android.util.AttributeSet;
 import android.util.FloatProperty;
 import android.util.Log;
 import android.util.MathUtils;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import com.android.internal.util.descendant.DescendantUtils;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -259,6 +261,10 @@ public class NotificationPanelView extends PanelView implements
     private boolean mNoVisibleNotifications = true;
     private ValueAnimator mDarkAnimator;
     private boolean mUserSetupComplete;
+
+    private GestureDetector mLockscreenDoubleTapToSleep;
+    private boolean mIsLockscreenDoubleTapEnabled;
+
     private int mQsNotificationTopPadding;
     private float mExpandOffset;
     private boolean mHideIconsDuringNotificationLaunch = true;
@@ -300,6 +306,14 @@ public class NotificationPanelView extends PanelView implements
         setWillNotDraw(!DEBUG);
         mFalsingManager = FalsingManager.getInstance(context);
         mPowerManager = context.getSystemService(PowerManager.class);
+        mLockscreenDoubleTapToSleep = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                DescendantUtils.switchScreenOff(context);
+                return true;
+            }
+        });
         mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
         setAccessibilityPaneTitle(determineAccessibilityPaneTitle());
         mAlphaPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
@@ -877,6 +891,10 @@ public class NotificationPanelView extends PanelView implements
         if (mBlockTouches || (mQs != null && mQs.isCustomizing())) {
             return false;
         }
+        if (mIsLockscreenDoubleTapEnabled
+                && mStatusBarState == StatusBarState.KEYGUARD) {
+            mLockscreenDoubleTapToSleep.onTouchEvent(event);
+        }
         initDownStates(event);
         if (mListenForHeadsUp && !mHeadsUpTouchHelper.isTrackingHeadsUp()
                 && mHeadsUpTouchHelper.onInterceptTouchEvent(event)) {
@@ -905,6 +923,10 @@ public class NotificationPanelView extends PanelView implements
         }
         handled |= super.onTouchEvent(event);
         return mDozing ? handled : true;
+    }
+
+    public void setLockscreenDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsLockscreenDoubleTapEnabled = isDoubleTapEnabled;
     }
 
     private boolean handleQsTouch(MotionEvent event) {
