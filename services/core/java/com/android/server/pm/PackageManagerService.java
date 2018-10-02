@@ -4017,7 +4017,7 @@ public class PackageManagerService extends IPackageManager.Stub
                     && p.mAppMetaData != null) {
                 String sig = p.mAppMetaData.getString("fake-signature");
                 if (sig != null) {
-                    pi.signatures = new Signature {new Signature(sig)};
+                    pi.signatures = new Signature[] {new Signature(sig)};
                 }
             }
         } catch (Throwable t) {
