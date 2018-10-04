@@ -2142,17 +2142,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
-    public boolean isUsingBlackTheme() {
-        OverlayInfo themeInfo = null;
-        try {
-            themeInfo = mOverlayManager.getOverlayInfo("com.android.system.theme.black",
-                    mLockscreenUserManager.getCurrentUserId());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return themeInfo != null && themeInfo.isEnabled();
-    }
-
     // Check for black and white accent overlays
     public void unfuckBlackWhiteAccent() {
         OverlayInfo themeInfo = null;
@@ -3976,10 +3965,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected void updateTheme() {
         final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
 
-        int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SYSTEM_THEME_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
-        boolean useDarkTheme;
-        boolean useBlackTheme;
+	boolean useDarkTheme;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -3989,10 +3975,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             // Check for black and white accent so we don't end up
             // with white on white or black on black
             unfuckBlackWhiteAccent();
-            useBlackTheme = false;
         } else {
             useDarkTheme = userThemeSetting == 2;
-	    useBlackTheme = userThemeSetting == 3;
         }
         if (isUsingDarkTheme() != useDarkTheme) {
             mUiOffloadThread.submit(() -> {
@@ -4002,18 +3986,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     // Check for black and white accent so we don't end up
                     // with white on white or black on black
                     unfuckBlackWhiteAccent();
-                } catch (RemoteException e) {
-                    Log.w(TAG, "Can't change theme", e);
-                }
-            });
-        }
-        if (isUsingBlackTheme() != useBlackTheme) {
-            mUiOffloadThread.submit(() -> {
-                try {
-                    mOverlayManager.setEnabled("com.android.system.theme.black",
-                            useBlackTheme, mLockscreenUserManager.getCurrentUserId());
-                    mOverlayManager.setEnabled("com.android.settings.theme.black",
-                            useBlackTheme, mLockscreenUserManager.getCurrentUserId());
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
                 }
@@ -5432,9 +5404,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVIGATION_BAR_SHOW), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SYSTEM_THEME_STYLE),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACCENT_PICKER),
                     false, this, UserHandle.USER_ALL);
