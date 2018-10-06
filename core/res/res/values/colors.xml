@@ -212,4 +212,8 @@
 
     <!-- Homepage circle bkg -->
     <color name="descendant_circle_bkg">#f1eeee</color>
+
+    <!-- SettingsIntelligence -->
+    <color name="search_panel_bkg">#ffffff</color>
+
 </resources>
