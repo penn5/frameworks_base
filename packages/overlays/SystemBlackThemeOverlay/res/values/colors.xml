@@ -31,4 +31,6 @@
     <!-- Toast text and bg colors -->
     <color name="toast_bg_color">@*android:color/black</color>
     <color name="toast_text_color">@android:color/white</color>
+
+    <color name="search_panel_bkg">@*android:color/black</color>
 </resources>
