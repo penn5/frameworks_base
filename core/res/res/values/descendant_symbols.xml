@@ -27,4 +27,18 @@
     <java-symbol type="string" name="reboot_message" />
     <java-symbol type="string" name="config_deviceKeyHandlerLib" />
     <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+    <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+
+  <!-- Package Manager -->
+  <java-symbol type="array" name="config_disabledComponents" />
+  <!-- System update service -->
+  <java-symbol type="array" name="config_forceEnabledComponents" />
+  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+  <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
+
+  <!-- App error dialog -->
+  <java-symbol type="id" name="aerr_copy" />
+  <java-symbol type="string" name="url_copy_success" />
+  <java-symbol type="string" name="url_copy_failed" />
+
 </resources>
