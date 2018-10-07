@@ -4254,7 +4254,7 @@ public final class Settings {
          * 3 - force black
          * @hide
          */
-        public static final String SYSTEM_THEME_STYLE = "system_theme_style";
+        public static final String SYSTEM_UI_THEME = "system_ui_theme";
 
         /**
          * @hide

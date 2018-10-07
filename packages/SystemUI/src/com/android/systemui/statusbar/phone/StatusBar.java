@@ -3955,7 +3955,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected void updateTheme() {
         final boolean inflated = mStackScroller != null;
         int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SYSTEM_THEME_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+                Settings.System.SYSTEM_UI_THEME, 0, mLockscreenUserManager.getCurrentUserId());
         boolean useBlackTheme = false;
 	boolean useDarkTheme;
         if (userThemeSetting == 0) {
