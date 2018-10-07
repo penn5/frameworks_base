@@ -57,8 +57,8 @@
             android:layout_gravity="center_horizontal|top">
             <TextClock
                 android:id="@+id/clock_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0.0dp"
+                android:layout_height="0.0dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
@@ -68,6 +68,19 @@
                 style="@style/widget_big_thin"
                 android:format12Hour="@string/keyguard_widget_12_hours_format"
                 android:format24Hour="@string/keyguard_widget_24_hours_format" />
+
+        <AnalogClock 
+                android:id="@*com.android.systemui:id/clock" 
+                android:backgroundTint="@null" 
+                android:dial="@*android:drawable/clock_dial" 
+                android:hand_hour="@*android:drawable/clock_hand_hour" 
+                android:hand_minute="@*android:drawable/clock_hand_minute"  
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:layout_gravity="center" 
+                android:layout_alignParentTop="true" 
+                android:layout_centerHorizontal="true" />
+
             <View
                 android:id="@+id/clock_separator"
                 android:layout_width="@dimen/widget_separator_width"
