@@ -3942,7 +3942,8 @@ public class StatusBar extends SystemUI implements DemoMode,
      */
     protected void updateTheme() {
         final boolean inflated = mStackScroller != null;
-
+        int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEM_UI_THEME, 0, mCurrentUserId);
 	boolean useDarkTheme;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
@@ -3955,6 +3956,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
         } else {
             useDarkTheme = userThemeSetting == 2;
+            // Check for black and white accent so we don't end up
+            // with white on white or black on black
+            unfuckBlackWhiteAccent();
         }
         if (isUsingDarkTheme() != useDarkTheme) {
             mUiOffloadThread.submit(() -> {
@@ -5382,6 +5386,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_UI_THEME),
                     false, this, UserHandle.USER_ALL);
             update();
         }
