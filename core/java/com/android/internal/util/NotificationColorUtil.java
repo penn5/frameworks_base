@@ -40,6 +40,7 @@ import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.util.Pair;
 
+import com.android.internal.R;
 import java.util.Arrays;
 import java.util.WeakHashMap;
 
