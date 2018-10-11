@@ -81,19 +81,21 @@
                 android:layout_alignParentTop="true" 
                 android:layout_centerHorizontal="true" />
 
-            <View
-                android:id="@+id/clock_separator"
-                android:layout_width="@dimen/widget_separator_width"
-                android:layout_height="@dimen/widget_separator_thickness"
-                android:layout_below="@id/clock_view"
-                android:background="#f00"
-                android:layout_centerHorizontal="true" />
+        <View 
+		android:id="@*com.android.systemui:id/clock_separator" 
+		android:background="#00000000" 
+		android:layout_width="@*com.android.systemui:dimen/widget_separator_width" 
+		android:layout_height="@*com.android.systemui:dimen/widget_separator_thickness" 
+		android:layout_below="@*com.android.systemui:id/clock" 
+		android:layout_centerHorizontal="true" />
 
-            <include layout="@layout/keyguard_status_area"
-                android:id="@+id/keyguard_status_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/clock_separator" />
+        <include 
+		android:id="@*com.android.systemui:id/keyguard_status_area" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" 
+		android:layout_below="@*com.android.systemui:id/clock_separator" 
+		layout="@*com.android.systemui:layout/keyguard_status_area" />
+
         </RelativeLayout>
 
         <TextView
