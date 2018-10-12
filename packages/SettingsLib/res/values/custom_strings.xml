@@ -21,4 +21,7 @@
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
 
+    <!-- Two target preference vertical divider color -->
+    <color name="list_divider_dark">#64000000</color>
+
 </resources>
