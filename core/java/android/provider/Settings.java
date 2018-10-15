@@ -4276,6 +4276,8 @@ public final class Settings {
     	 * 0 - default QS
     	 * 1 - square QS
     	 * 2 - "super bubble" QS
+	 * 3 - teardrop QS
+	 * 4 - zen QS
     	 * @hide
     	 */
     	public static final String QS_SELECTOR = "qs_selector";
