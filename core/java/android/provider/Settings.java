@@ -4273,14 +4273,14 @@ public final class Settings {
         public static final String SYSTEM_UI_THEME = "system_ui_theme";
 
     	/**
-    	 * 0 - default QS
-    	 * 1 - square QS
-    	 * 2 - "super bubble" QS
-	 * 3 - teardrop QS
-	 * 4 - zen QS
+    	 * 0 - default QS/settings icons
+	 * 1 - Descendant default QS/settings icons
+    	 * 2 - square QS/settings icons
+    	 * 3 - "super bubble" QS/settings icons
+	 * 4 - teardrop QS/settings icons
     	 * @hide
     	 */
-    	public static final String QS_SELECTOR = "qs_selector";
+    	public static final String ICON_SELECTOR = "icon_selector";
 
 
         /**
