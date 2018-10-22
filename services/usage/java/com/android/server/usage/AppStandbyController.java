@@ -1376,7 +1376,7 @@ public class AppStandbyController {
 
     void initializeDefaultsForSystemApps(int userId) {
         if (!mSystemServicesReady) {
-            // Do it later, since SettingsProvider wasn't queried yet for app_standby_enabled
+            // Do it later, since SettingsProvider wasn't queried yet for adaptive_battery_management_enabled
             mPendingInitializeDefaults = true;
             return;
         }
@@ -1782,10 +1782,10 @@ public class AppStandbyController {
         }
 
         void registerObserver() {
-            final ContentResolver cr = mContext.getContentResolver();
-            cr.registerContentObserver(Global.getUriFor(Global.APP_IDLE_CONSTANTS), false, this);
+            final ContentResolver desc = mContext.getContentResolver();
+            desc.registerContentObserver(Global.getUriFor(Global.APP_IDLE_CONSTANTS), false, this);
             /*cr.registerContentObserver(Global.getUriFor(Global.APP_STANDBY_ENABLED), false, this);*/
-            cr.registerContentObserver(Global.getUriFor(Global.ADAPTIVE_BATTERY_MANAGEMENT_ENABLED),
+            desc.registerContentObserver(Global.getUriFor(Global.ADAPTIVE_BATTERY_MANAGEMENT_ENABLED),
                     false, this);
         }
 
