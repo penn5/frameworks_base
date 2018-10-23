@@ -2144,6 +2144,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
+    public boolean isUsingBlackTheme() {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = mOverlayManager.getOverlayInfo("com.android.systemui.theme.dark",
+                    mLockscreenUserManager.getCurrentUserId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+    }
+
     // Check for black and white accent overlays
     public void unfuckBlackWhiteAccent() {
         OverlayInfo themeInfo = null;
@@ -4009,7 +4020,17 @@ public class StatusBar extends SystemUI implements DemoMode,
             useDarkTheme = userThemeSetting == 2;
         }
         if (isUsingDarkTheme() != useDarkTheme) {
-            mUiOffloadThread.submit(() -> {
+                try {
+                    mOverlayManager.setEnabled("com.android.systemui.theme.dark",
+                            useDarkTheme, mLockscreenUserManager.getCurrentUserId());
+                    // Check for black and white accent so we don't end up
+                    // with white on white or black on black
+                    unfuckBlackWhiteAccent();
+                } catch (RemoteException e) {
+                    Log.w(TAG, "Can't change dark theme", e);
+            }
+        }
+        if (isUsingBlackTheme() != useBlackTheme) {
                 try {
                     mOverlayManager.setEnabled("com.android.systemui.theme.dark",
                             useDarkTheme, mLockscreenUserManager.getCurrentUserId());
