@@ -2155,6 +2155,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
+    public boolean isUsingPurpleTheme() {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = mOverlayManager.getOverlayInfo("org.descendant.system.purplehaze.overlay",
+                    mLockscreenUserManager.getCurrentUserId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+    }
+
     // Check for black and white accent overlays
     public void unfuckBlackWhiteAccent() {
         OverlayInfo themeInfo = null;
@@ -4004,9 +4015,12 @@ public class StatusBar extends SystemUI implements DemoMode,
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
-        final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
-
-	boolean useDarkTheme;
+        final boolean inflated = mStackScroller != null;
+        int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEM_UI_THEME, 0, mLockscreenUserManager.getCurrentUserId());
+        boolean useBlackTheme = false;
+	boolean useDarkTheme = false;
+	boolean usePurpleTheme = false;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -4017,6 +4031,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             // with white on white or black on black
             unfuckBlackWhiteAccent();
         } else {
+	    usePurpleTheme = userThemeSetting == 4;
+            useBlackTheme = userThemeSetting == 3;
             useDarkTheme = userThemeSetting == 2;
         }
         if (isUsingDarkTheme() != useDarkTheme) {
@@ -4030,6 +4046,14 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Log.w(TAG, "Can't change dark theme", e);
             }
         }
+	if (isUsingPurpleTheme() != usePurpleTheme) {
+                try {
+                    mOverlayManager.setEnabled("org.descendant.system.purplehaze.overlay",
+                            usePurpleTheme, mLockscreenUserManager.getCurrentUserId());
+                } catch (RemoteException e) {
+                    Log.w(TAG, "Can't change purple theme(s)", e);
+            }
+	}
         if (isUsingBlackTheme() != useBlackTheme) {
                 try {
                     mOverlayManager.setEnabled("com.android.systemui.theme.dark",
