@@ -115,6 +115,11 @@ class TaskSnapshotController {
      */
     private final boolean mIsRunningOnWear;
 
+    /**
+     * Flag indicating whether we are running on a Huawei P20 Lite.
+     */
+    private final boolean mIsRunningOnP20Lite;
+
     TaskSnapshotController(WindowManagerService service) {
         mService = service;
         mCache = new TaskSnapshotCache(mService, mLoader);
@@ -124,6 +129,7 @@ class TaskSnapshotController {
                 PackageManager.FEATURE_EMBEDDED);
         mIsRunningOnWear = mService.mContext.getPackageManager().hasSystemFeature(
             PackageManager.FEATURE_WATCH);
+        mIsRunningOnP20Lite = android.os.SystemProperties.get("ro.hw.oemName").contains("ANE");
     }
 
     void systemReady() {
@@ -281,7 +287,7 @@ class TaskSnapshotController {
     }
 
     private boolean shouldDisableSnapshots() {
-        return mIsRunningOnWear || mIsRunningOnTv || mIsRunningOnIoT;
+        return mIsRunningOnWear || mIsRunningOnTv || mIsRunningOnIoT || mIsRunningOnP20Lite;
     }
 
     private Rect getInsets(WindowState state) {
