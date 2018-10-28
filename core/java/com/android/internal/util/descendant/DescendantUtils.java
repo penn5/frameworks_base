@@ -40,7 +40,9 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.PowerManager;
 import android.os.SystemProperties;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.Vibrator;
 import android.telephony.TelephonyManager;
@@ -74,6 +76,14 @@ public class DescendantUtils {
         DisplayManager dm = (DisplayManager) ctx.getSystemService(Context.DISPLAY_SERVICE);
         return (dm.getWifiDisplayStatus().getFeatureState()
                 != WifiDisplayStatus.FEATURE_STATE_UNAVAILABLE);
+    }
+
+    // Method to turn off the screen
+    public static void switchScreenOff(Context ctx) {
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        if (pm!= null) {
+            pm.goToSleep(SystemClock.uptimeMillis());
+        }
     }
 
      public static boolean deviceSupportsUsbTether(Context context) {
