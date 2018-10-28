@@ -244,4 +244,9 @@
     <!-- Notification info -->
     <color name="notification_info_button_text">@color/accent_device_default_light</color>
 
+    <!-- Generic colors -->
+    <color name="generic_theme_primary">#FFFFFFFF</color>
+    <color name="generic_theme_primary_dark">#FFFFFFFF</color>
+    <color name="generic_theme_accent">#FFFFFFFF</color>
+
 </resources>
