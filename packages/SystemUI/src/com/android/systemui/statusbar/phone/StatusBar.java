@@ -2166,6 +2166,16 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
+    public boolean isUsingBluetteTheme() {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = mOverlayManager.getOverlayInfo("org.descendant.system.bluette.overlay",
+                    mLockscreenUserManager.getCurrentUserId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+    }
     // Check for black and white accent overlays
     public void unfuckBlackWhiteAccent() {
         OverlayInfo themeInfo = null;
@@ -4075,6 +4085,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean useBlackTheme = false;
 	boolean useDarkTheme = false;
 	boolean usePurpleTheme = false;
+	boolean useBluetteTheme = false;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -4085,6 +4096,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             // with white on white or black on black
             unfuckBlackWhiteAccent();
         } else {
+	    useBluetteTheme = userThemeSetting == 5;
 	    usePurpleTheme = userThemeSetting == 4;
             useBlackTheme = userThemeSetting == 3;
             useDarkTheme = userThemeSetting == 2;
@@ -4106,6 +4118,14 @@ public class StatusBar extends SystemUI implements DemoMode,
                             usePurpleTheme, mLockscreenUserManager.getCurrentUserId());
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change purple theme(s)", e);
+            }
+	}
+	if (isUsingBluetteTheme() != useBluetteTheme) {
+                try {
+                    mOverlayManager.setEnabled("org.descendant.system.bluette.overlay",
+                            useBluetteTheme, mLockscreenUserManager.getCurrentUserId());
+                } catch (RemoteException e) {
+                    Log.w(TAG, "Can't change bluette theme(s)", e);
             }
 	}
         if (isUsingBlackTheme() != useBlackTheme) {
