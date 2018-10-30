@@ -4322,54 +4322,47 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         } else if (accentSetting == 13) {
             try {
-                mOverlayManager.setEnabled("com.accents.yellow",
+                mOverlayManager.setEnabled("com.accents.amber",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
         } else if (accentSetting == 14) {
             try {
-                mOverlayManager.setEnabled("com.accents.amber",
+                mOverlayManager.setEnabled("com.accents.orange",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
         } else if (accentSetting == 15) {
             try {
-                mOverlayManager.setEnabled("com.accents.orange",
+                mOverlayManager.setEnabled("com.accents.deeporange",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
         } else if (accentSetting == 16) {
             try {
-                mOverlayManager.setEnabled("com.accents.deeporange",
+                mOverlayManager.setEnabled("com.accents.brown",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
         } else if (accentSetting == 17) {
             try {
-                mOverlayManager.setEnabled("com.accents.brown",
+                mOverlayManager.setEnabled("com.accents.grey",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
         } else if (accentSetting == 18) {
             try {
-                mOverlayManager.setEnabled("com.accents.grey",
-                        true, mLockscreenUserManager.getCurrentUserId());
-            } catch (RemoteException e) {
-                Log.w(TAG, "Can't change theme", e);
-            }
-        } else if (accentSetting == 19) {
-            try {
                 mOverlayManager.setEnabled("com.accents.bluegrey",
                         true, mLockscreenUserManager.getCurrentUserId());
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
-        } else if (accentSetting == 20) {
+        } else if (accentSetting == 19) {
             try {
                 // If using a dark theme we use the white accent, otherwise use the black accent
                 if (isUsingDarkTheme()) {
