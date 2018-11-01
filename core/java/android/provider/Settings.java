@@ -4269,7 +4269,6 @@ public final class Settings {
          * 2 - force dark
     	 * 3 - force black
 	 * 4 - purplehaze
-	 * 5 - bluette
          * @hide
          */
         public static final String SYSTEM_UI_THEME = "system_ui_theme";
