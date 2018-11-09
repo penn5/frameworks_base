@@ -842,7 +842,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
         updateTheme();
-	    QSswitcher();
+	    systemIconSwitcher();
 
         inflateStatusBarWindow(context);
         mStatusBarWindow.setService(this);
@@ -2130,7 +2130,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void onColorsChanged(ColorExtractor extractor, int which) {
         updateTheme();
-    	QSswitcher();
+    	systemIconSwitcher();
     }
 
     public boolean isUsingDarkTheme() {
@@ -3958,7 +3958,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
         mNotificationPanel.setBarState(mState, mKeyguardFadingAway, goingToFullShade);
-    	QSswitcher();
+    	systemIconSwitcher();
         updateTheme();
         updateDozingState();
         updatePublicMode();
@@ -3979,80 +3979,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected void systemIconSwitcher() {
         int IconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.ICON_SELECTOR, 0, mLockscreenUserManager.getCurrentUserId());
-<<<<<<< HEAD
-	try {
-<<<<<<< HEAD
-		switch (QSThemeSetting) {
-		    	case 0:  mOverlayManager.setEnabled("org.descendant.qs.default.overlay", true, mLockscreenUserManager.getCurrentUserId());
-       			         mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-			         mOverlayManager.setEnabled("org.descendant.qs.super_bubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-			         break;
-	        	case 1:  mOverlayManager.setEnabled("org.descendant.qs.square.overlay", true, mLockscreenUserManager.getCurrentUserId());
-	                         mOverlayManager.setEnabled("org.descendant.qs.default.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.super_bubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-		     		 break;
-		        case 2:  mOverlayManager.setEnabled("org.descendant.qs.super_bubble.overlay", true, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.default.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-		                 break;
-	}
-} catch(RemoteException e) {
-		Log.w(TAG, "Can't change QS!", e);
-=======
-		switch (IconThemeSetting) {
-		    	case 0:  mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.zen.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-			         break;
-		    	case 1:  mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.descendant.overlay", true, mLockscreenUserManager.getCurrentUserId());
-                        	 mOverlayManager.setEnabled("org.descendant.settings.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.zen.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.descendant.overlay", true, mLockscreenUserManager.getCurrentUserId());
-				 break;
-			case 2:  mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", true, mLockscreenUserManager.getCurrentUserId());
-                        	 mOverlayManager.setEnabled("org.descendant.settings.zen.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.square.overlay", true, mLockscreenUserManager.getCurrentUserId());
-				 break;
-                         case 3: mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.superbubble.overlay", true, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.superbubble.overlay", true, mLockscreenUserManager.getCurrentUserId());
-		                 break;
-                        case 4:  mOverlayManager.setEnabled("org.descendant.qs.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.qs.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-				 mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", true, mLockscreenUserManager.getCurrentUserId());
-                        	 mOverlayManager.setEnabled("org.descendant.settings.superbubble.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.descendant.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.square.overlay", false, mLockscreenUserManager.getCurrentUserId());
-                                 mOverlayManager.setEnabled("org.descendant.settings.teardrop.overlay", true, mLockscreenUserManager.getCurrentUserId());
-				 break;
-		}
-	} catch(RemoteException e) {
-		Log.w(TAG, "Can't change QS/Settings icons!", e);
-	}
-=======
             try {
                 switch (IconThemeSetting) {
                     case 0: mOverlayManager.setEnabled("org.descendant.qs.teardrop.overlay", false, mLockscreenUserManager.getCurrentUserId());
@@ -4158,7 +4084,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
                 }
-            });
         }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
@@ -4552,7 +4477,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateReportRejectedTouchVisibility();
         updateDozing();
         updateTheme();
-    	QSswitcher();
+    	systemIconSwitcher();
         touchAutoDim();
         mNotificationShelf.setStatusBarState(state);
     }
