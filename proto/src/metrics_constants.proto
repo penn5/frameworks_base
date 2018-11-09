@@ -6435,6 +6435,6 @@ message MetricsEvent {
     // END OF AOSP CONSTANTS
 
     //DescendantSettings
-    DESCENDANT_SETTINGS = 420;
+    DESCENDANT_SETTINGS = 1554;
   }
 }
