@@ -42,4 +42,7 @@
     <!-- Ambient notification icon tint -->
     <color name="notification_ambient_icon_default_color">@color/notification_icon_default_color</color>
 
+    <!-- App permission tint -->
+    <color name="app_permission_icon_tint">@android:color/black</color>
+
 </resources>
