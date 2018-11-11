@@ -4203,7 +4203,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SYSTEM_UI_THEME, 0, mLockscreenUserManager.getCurrentUserId());
         boolean useBlackTheme = false;
-	boolean useDarkTheme = false;
+        boolean useDarkTheme = false;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -4212,6 +4212,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                     && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
             // Check for black and white accent so we don't end up
             // with white on white or black on black
+            unfuckBlackWhiteAccent();
+            }
+        if (userThemeSetting == 1) {
+            mOverlayManager.setEnabled("com.android.systemui.theme.dark", false, mLockscreenUserManager.getCurrentUserId());
+            mOverlayManager.setEnabled("com.android.system.theme.black", false, mLockscreenUserManager.getCurrentUserId());
             unfuckBlackWhiteAccent();
         } else {
             useBlackTheme = userThemeSetting == 3;
