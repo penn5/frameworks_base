@@ -4237,6 +4237,11 @@ public final class Settings {
         public static final String QS_LAYOUT_ROWS = "qs_layout_rows";
 
         /**
+         * @hide
+         */
+        public static final String QS_LAYOUT_ROWS_LANDSCAPE = "qs_layout_rows_landscape";
+
+        /**
          * Disable dashboard suggestions in settings
          * @hide
          */
