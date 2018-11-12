@@ -413,6 +413,8 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
         mCallback.onPerformRemoveNotification(n);
     }
 
+    private boolean mLessBoringHeadsUp;
+
     /**
      * Cancel this notification and tell the StatusBarManagerService / NotificationManagerService
      * about the failure.
@@ -916,13 +918,25 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
         updateNotifications();
     }
 
+    public void setUseLessBoringHeadsUp(boolean lessBoring) {
+        mLessBoringHeadsUp = lessBoring;
+    }
+
+    public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
+        boolean isImportantHeadsUp = false;
+        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
+                notificationPackageName.contains("messaging");
+        return !mPresenter.isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
+    }
+
     protected boolean shouldPeek(NotificationData.Entry entry) {
         return shouldPeek(entry, entry.notification);
     }
 
     public boolean shouldPeek(NotificationData.Entry entry, StatusBarNotification sbn) {
-        if (!mUseHeadsUp || mPresenter.isDeviceInVrMode()) {
-            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode");
+        if (!mUseHeadsUp || mPresenter.isDeviceInVrMode() || shouldSkipHeadsUp(sbn)) {
+            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode or less boring headsup enabled");
             return false;
         }
 
