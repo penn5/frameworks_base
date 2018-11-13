@@ -5554,6 +5554,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.LESS_BORING_HEADS_UP))) {
                 setUseLessBoringHeadsUp();
             }
+            update();
     }
         public void update() {
              ContentResolver resolver = mContext.getContentResolver();
@@ -5562,6 +5563,7 @@ public class StatusBar extends SystemUI implements DemoMode,
              systemIconSwitcher();
              setFpToDismissNotifications();
              setUseLessBoringHeadsUp();
+             systemIconSwitcher();
         }
     }
 
