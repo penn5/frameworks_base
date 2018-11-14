@@ -88,6 +88,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
 import android.metrics.LogMaker;
@@ -108,6 +109,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.service.vr.IVrManager;
@@ -429,6 +431,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private boolean mFpDismissNotifications;
 
+    private boolean mFpTapToShoot;
+
     private final int[] mAbsPos = new int[2];
     private final ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
 
@@ -682,6 +686,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private HeadsUpAppearanceController mHeadsUpAppearanceController;
     private boolean mVibrateOnOpening;
     private VibratorHelper mVibratorHelper;
+    private boolean mIsCameraInUse;
 
     private AmbientIndicationManager mAmbientIndicationManager;
     private boolean mRecognitionEnabled;
@@ -691,6 +696,23 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void start() {
+        CameraManager mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+
+        mCameraManager.registerAvailabilityCallback(new CameraManager.AvailabilityCallback() {
+
+            @Override
+            public void onCameraAvailable(String cameraId) {
+                super.onCameraAvailable(cameraId);
+                mIsCameraInUse = false;
+            }
+
+            @Override
+            public void onCameraUnavailable(String cameraId) {
+                super.onCameraUnavailable(cameraId);
+                mIsCameraInUse = true;
+            }
+        }, mHandler);
+
         mGroupManager = Dependency.get(NotificationGroupManager.class);
         mVisualStabilityManager = Dependency.get(VisualStabilityManager.class);
         mNotificationLogger = Dependency.get(NotificationLogger.class);
@@ -2445,10 +2467,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (!mNotificationPanel.isFullyCollapsed() && !mNotificationPanel.isExpanding()){
                 mMetricsLogger.action(MetricsEvent.ACTION_DISMISS_ALL_NOTES);
                 clearAllNotifications(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT == key ? true : false);
+                }
+            } else if (mFpTapToShoot && (KeyEvent.KEYCODE_FOCUS == key) && mIsCameraInUse) {
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_CAMERA, mHandler);
+                    }
             }
-        }
-
-    }
+      }
 
     @Override
     public void showPinningEnterExitToast(boolean entering) {
@@ -5634,6 +5658,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.FP_TAP_TO_SHOOT),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5658,9 +5685,13 @@ public class StatusBar extends SystemUI implements DemoMode,
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP))) {
                 setUseLessBoringHeadsUp();
-            }
+           } else if (uri.equals(Settings.Secure.getUriFor(
+                   Settings.Secure.FP_TAP_TO_SHOOT))) {
+                setFpTapToShoot();
+           }
             update();
     }
+
         public void update() {
              ContentResolver resolver = mContext.getContentResolver();
              updateTheme();
@@ -5669,7 +5700,14 @@ public class StatusBar extends SystemUI implements DemoMode,
              setFpToDismissNotifications();
              setUseLessBoringHeadsUp();
              systemIconSwitcher();
+             setFpTapToShoot();
         }
+    }
+
+    private void setFpTapToShoot() {
+        mFpTapToShoot = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.FP_TAP_TO_SHOOT, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private void setFpToDismissNotifications() {
