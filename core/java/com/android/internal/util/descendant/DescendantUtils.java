@@ -37,6 +37,7 @@ import android.os.AsyncTask;
 import android.nfc.NfcAdapter;
 import android.provider.Settings;
 import android.hardware.input.InputManager;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -312,6 +313,15 @@ public class DescendantUtils {
                 }
             }
         }
+    }
+
+    private static boolean isMusicActive(Context context) {
+        final AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        if (am == null) {
+            Log.w(TAG, "isMusicActive: couldn't get AudioManager reference");
+            return false;
+        }
+        return am.isMusicActive();
     }
 
     /**

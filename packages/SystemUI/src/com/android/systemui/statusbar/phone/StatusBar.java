@@ -433,6 +433,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private boolean mFpTapToShoot;
 
+    private boolean mFpGesturesControlMedia;
+
     private final int[] mAbsPos = new int[2];
     private final ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
 
@@ -2471,6 +2473,18 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (mFpTapToShoot && (KeyEvent.KEYCODE_FOCUS == key) && mIsCameraInUse) {
                     DescendantUtils.sendKeycode(KeyEvent.KEYCODE_CAMERA, mHandler);
                     }
+            } else if (mFpGesturesControlMedia && (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT == key)
+                    && DescendantUtils.isMusicActive(mContext)) {
+               if (mNotificationPanel.isFullyCollapsed() && mNotificationPanel.isExpanding()){
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_PREVIOUS, mHandler);
+                    }
+                }
+            } else if (mFpGesturesControlMedia && (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT == key)
+                    && DescendantUtils.isMusicActive(mContext)) {
+               if (mNotificationPanel.isFullyCollapsed() && mNotificationPanel.isExpanding()){
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_NEXT, mHandler);
+                    }
+                }
             }
       }
 

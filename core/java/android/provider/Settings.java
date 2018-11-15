@@ -8047,6 +8047,14 @@ public final class Settings {
         private static final Validator FP_TAP_TO_SHOOT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Wheter control media on fingerprint left and right swipe action
+         * @hide
+         */
+        public static final String FP_GESTURES_CONTROL_MEDIA = "fp_gestures_control_media";
+
+        private static final Validator FP_GESTURES_CONTROL_MEDIA_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Wheter to dismiss notifications on fingerprint left and right swipe action
          * @hide
          */
@@ -8511,6 +8519,7 @@ public final class Settings {
             VALIDATORS.put(FP_SWIPE_TO_DISMISS_NOTIFICATIONS,
                     FP_SWIPE_TO_DISMISS_NOTIFICATIONS_VALIDATOR);
             VALIDATORS.put(FP_TAP_TO_SHOOT,FP_TAP_TO_SHOOT_VALIDATOR);
+            VALIDATORS.put(FP_GESTURES_CONTROL_MEDIA,FP_GESTURES_CONTROL_MEDIA_VALIDATOR);
         }
 
         /**
