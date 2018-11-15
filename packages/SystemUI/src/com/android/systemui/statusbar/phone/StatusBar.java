@@ -896,7 +896,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
         updateTheme();
-	    systemIconSwitcher();
 
         inflateStatusBarWindow(context);
         mStatusBarWindow.setService(this);
@@ -2276,7 +2275,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void onColorsChanged(ColorExtractor extractor, int which) {
         updateTheme();
-    	systemIconSwitcher();
     }
 
     public boolean isUsingDarkTheme() {
@@ -4120,7 +4118,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             hideAmbientPlayIndication(0, false);
         }
         mNotificationPanel.setBarState(mState, mKeyguardFadingAway, goingToFullShade);
-    	systemIconSwitcher();
         updateTheme();
         updateDozingState();
         updatePublicMode();
@@ -4639,7 +4636,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateReportRejectedTouchVisibility();
         updateDozing();
         updateTheme();
-    	systemIconSwitcher();
         touchAutoDim();
         mNotificationShelf.setStatusBarState(state);
     }
@@ -5707,7 +5703,6 @@ public class StatusBar extends SystemUI implements DemoMode,
              ContentResolver resolver = mContext.getContentResolver();
              updateTheme();
              setLockscreenDoubleTapToSleep();
-             systemIconSwitcher();
              setFpToDismissNotifications();
              setUseLessBoringHeadsUp();
              systemIconSwitcher();
