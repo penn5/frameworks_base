@@ -2471,20 +2471,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                 clearAllNotifications(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT == key ? true : false);
                 }
             } else if (mFpTapToShoot && (KeyEvent.KEYCODE_FOCUS == key) && mIsCameraInUse) {
-                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_CAMERA, mHandler);
-                    }
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_CAMERA);
             } else if (mFpGesturesControlMedia && (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT == key)
                     && DescendantUtils.isMusicActive(mContext)) {
                if (mNotificationPanel.isFullyCollapsed() && mNotificationPanel.isExpanding()){
-                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_PREVIOUS, mHandler);
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                     }
-                }
             } else if (mFpGesturesControlMedia && (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT == key)
                     && DescendantUtils.isMusicActive(mContext)) {
                if (mNotificationPanel.isFullyCollapsed() && mNotificationPanel.isExpanding()){
-                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_NEXT, mHandler);
+                    DescendantUtils.sendKeycode(KeyEvent.KEYCODE_MEDIA_NEXT);
                     }
-                }
             }
       }
 

@@ -315,10 +315,9 @@ public class DescendantUtils {
         }
     }
 
-    private static boolean isMusicActive(Context context) {
+    public static boolean isMusicActive(Context context) {
         final AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         if (am == null) {
-            Log.w(TAG, "isMusicActive: couldn't get AudioManager reference");
             return false;
         }
         return am.isMusicActive();

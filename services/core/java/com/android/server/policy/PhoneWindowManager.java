@@ -860,6 +860,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_POWER_VERY_LONG_PRESS = 28;
     private static final int MSG_NOTIFY_USER_ACTIVITY = 29;
     private static final int MSG_RINGER_TOGGLE_CHORD = 30;
+    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 31;
 
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_STATUS = 0;
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_NAVIGATION = 1;
@@ -982,62 +983,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mVolumeMusicControlActive = true;
                     break;
                 }
-            }
-        }
-    }
-
-    private void runPostProximityCheck() {
-        if (mSensorManager == null) {
-            return;
-        }
-        synchronized (mProximityWakeLock) {
-            mProximityWakeLock.acquire();
-            mProximityListener = new SensorEventListener() {
-                @Override
-                public void onSensorChanged(SensorEvent event) {
-                    cleanupProximityLocked();
-                    if (!mHandler.hasMessages(MSG_CLEAR_PROXIMITY)) {
-                        return;
-                    }
-                    mHandler.removeMessages(MSG_CLEAR_PROXIMITY);
-                    final float distance = event.values[0];
-                    if (distance >= PROXIMITY_DISTANCE_THRESHOLD ||
-                            distance >= mProximitySensor.getMaximumRange()) {
-                        toggleFlashLight();
-                    }
-                }
-
-                @Override
-                public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                }
-            };
-            mSensorManager.registerListener(mProximityListener,
-                   mProximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
-        }
-    }
-
-    private void cleanupProximityLocked() {
-        if (mProximityWakeLock.isHeld()) {
-            mProximityWakeLock.release();
-        }
-        if (mProximityListener != null) {
-            mSensorManager.unregisterListener(mProximityListener);
-            mProximityListener = null;
-        }
-    }
-
-    private void cleanupProximity() {
-        synchronized (mProximityWakeLock) {
-            cleanupProximityLocked();
-        }
-    }
-
-    private void toggleFlashLightProximityCheck() {
-        if (mProximitySensor != null && mProximityTimeOut != -1) {
-            if (mHandler.hasMessages(MSG_CLEAR_PROXIMITY)) {
-                // A message is already queued
-                return;
->>>>>>> cff5808... [1/2] base: volume key music control
             }
         }
     }
@@ -2663,6 +2608,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             mUseGestureButton = Settings.System.getIntForUser(resolver,
                     Settings.System.OMNI_USE_BOTTOM_GESTURE_NAVIGATION, 0,
+                    UserHandle.USER_CURRENT) != 0;
             mVolumeMusicControl = Settings.System.getIntForUser(resolver,
                     Settings.System.VOLUME_BUTTON_MUSIC_CONTROL, 1,
                     UserHandle.USER_CURRENT) != 0;
@@ -9264,6 +9210,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      @Override
     public boolean isGestureButtonEnabled() {
         return mUseGestureButton;
+    }
     /**
      * @return Whether music is being played right now "locally" (e.g. on the device's speakers
      *    or wired headphones) or "remotely" (e.g. on a device using the Cast protocol and
