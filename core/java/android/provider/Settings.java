@@ -4366,6 +4366,37 @@ public final class Settings {
         /** @hide */
         private static final Validator STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String START_SCREEN_STATE_SERVICE = "start_screen_state_service";
+
+         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_TWOG = "screen_state_twog";
+
+         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_GPS = "screen_state_gps";
+
+         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_MOBILE_DATA = "screen_state_mobile_data";
+
+         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_OFF_DELAY = "screen_state_off_delay";
+
+         /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add

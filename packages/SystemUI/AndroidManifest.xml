@@ -221,6 +221,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="org.pixelexperience.ambient.play.history.MANAGE_HISTORY" />
 
+    <protected-broadcast android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
@@ -255,6 +257,12 @@
             android:exported="true"
             android:permission="com.android.systemui.permission.SELF" />
 
+        <service android:name=".screenstate.ScreenStateService"
+                android:exported="true" >
+            <intent-filter>
+               <action android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE"/>
+            </intent-filter>
+        </service>
 
         <!-- started from PhoneWindowManager
              TODO: Should have an android:permission attribute -->
