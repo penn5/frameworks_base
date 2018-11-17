@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2017 The Android Open Source Project
  *
@@ -646,6 +647,12 @@ public class BatteryMeterDrawableBase extends Drawable {
                     - strokeWidth / 2.0f + mContext.getResources().getDisplayMetrics().density;
                 c.drawText(mWarningString, x, y, mWarningTextPaint);
             }
+        }
+        // Draw the powersave outline last
+        if (!mCharging && mPowerSaveEnabled && mPowerSaveAsColorError) {
+             if (level > 0) {
+                 c.drawArc(mFrame, 270, 3.6f * level, false, mPowersavePaint);
+             }
         }
     }
 

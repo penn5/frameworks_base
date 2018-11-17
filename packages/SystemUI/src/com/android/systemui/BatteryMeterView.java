@@ -300,7 +300,7 @@ public class BatteryMeterView extends LinearLayout implements
                     if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
                     updatePercentText();
                     addView(mBatteryPercentView,
-                            0,
+                            //0,
                             new ViewGroup.LayoutParams(
                                     LayoutParams.WRAP_CONTENT,
                                     LayoutParams.MATCH_PARENT));
@@ -341,6 +341,14 @@ public class BatteryMeterView extends LinearLayout implements
      * Looks up the scale factor for status bar icons and scales the battery view by that amount.
      */
     private void scaleBatteryMeterViews() {
+        if (mBatteryPercentView != null) {
+            FontSizeUtils.updateFontSize(mBatteryPercentView, R.dimen.qs_time_expanded_size);
+        }
+
+        if (mBatteryIconView == null) {
+             return;
+        }
+
         Resources res = getContext().getResources();
         TypedValue typedValue = new TypedValue();
 
@@ -358,7 +366,6 @@ public class BatteryMeterView extends LinearLayout implements
         scaledLayoutParams.setMargins(0, 0, 0, marginBottom);
 
         mBatteryIconView.setLayoutParams(scaledLayoutParams);
-        FontSizeUtils.updateFontSize(mBatteryPercentView, R.dimen.qs_time_expanded_size);
     }
 
     @Override
@@ -418,13 +425,15 @@ public class BatteryMeterView extends LinearLayout implements
         switch (style) {
             case BatteryMeterDrawableBase.BATTERY_STYLE_TEXT:
                 if (mBatteryIconView != null) {
-                    mBatteryIconView.setVisibility(View.GONE);
+                    removeView(mBatteryIconView);
+                    mBatteryIconView = null;
                 }
                 mForceShowPercent = true;
                 break;
             case BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN:
                 if (mBatteryIconView != null) {
-                    mBatteryIconView.setVisibility(View.GONE);
+                    removeView(mBatteryIconView);
+                    mBatteryIconView = null;
                 }
                 break;
             default:
@@ -449,7 +458,7 @@ public class BatteryMeterView extends LinearLayout implements
                 break;
         }
 
-
+        scaleBatteryMeterViews();
         updateShowPercent();
         updatePercentText();
     }
