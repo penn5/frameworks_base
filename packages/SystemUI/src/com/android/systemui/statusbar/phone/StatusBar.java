@@ -4410,9 +4410,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             }
         if (userThemeSetting == 1) {
+            try {
             mOverlayManager.setEnabled("com.android.systemui.theme.dark", false, mLockscreenUserManager.getCurrentUserId());
             mOverlayManager.setEnabled("com.android.system.theme.black", false, mLockscreenUserManager.getCurrentUserId());
             unfuckBlackWhiteAccent();
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't switch to light theme", e);
+            }
         } else {
             useBlackTheme = userThemeSetting == 3;
             useDarkTheme = userThemeSetting == 2;
