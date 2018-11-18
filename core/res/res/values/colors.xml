@@ -248,6 +248,7 @@
     <color name="generic_theme_primary">#FFFFFFFF</color>
     <color name="generic_theme_primary_dark">#FFFFFFFF</color>
     <color name="generic_theme_accent">#FFFFFFFF</color>
+    <color name="gradient_end">#FFFFFFFF</color>
 
     <!-- Homepage backgound color -->
     <color name="homepage_icon_tint">#ffffffff</color>
