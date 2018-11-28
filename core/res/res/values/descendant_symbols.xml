@@ -37,4 +37,8 @@
   <java-symbol type="string" name="reboot_to_bootloader_message" />
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
+
+  <!-- Wallpaper component -->
+  <java-symbol type="string" name="default_wallpaper_component_custom" />
+
 </resources>
