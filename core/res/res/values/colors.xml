@@ -211,7 +211,7 @@
     <color name="floating_popup_divider_light">#E9E9E9</color>
 
     <!-- Homepage circle bkg -->
-    <color name="descendant_circle_bkg">#f1eeee</color>
+    <color name="descendant_circle_bkg">#0069ba</color>
 
     <!-- SettingsIntelligence -->
     <color name="search_panel_bkg">#ffffff</color>
