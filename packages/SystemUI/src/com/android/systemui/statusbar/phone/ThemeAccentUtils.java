@@ -149,6 +149,7 @@ public class ThemeAccentUtils {
                     om.setEnabled(theme,
                         useBlackTheme, userId);
                     unfuckBlackWhiteAccent(om, userId);
+                    unloadStockDarkTheme(om, userId); 
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
                 }
