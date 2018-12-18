@@ -4296,6 +4296,14 @@ public final class Settings {
     	public static final String ICON_SELECTOR = "icon_selector";
 
         /**
+         * 0 - default UI 
+         * 1 - roundier UI
+         * 2 - square UI
+         * @hide
+         */
+
+        public static final String UI_SELECTOR = "ui_selector";
+        /**
          * Wheter to show heads up only for dialer and sms apps
          * @hide
          */

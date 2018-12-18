@@ -4160,6 +4160,35 @@ public class StatusBar extends SystemUI implements DemoMode,
 
 
     /**
+     *uiSelector
+     */
+    protected void uiSelector(IOverlayManager om, int userId) {
+        int uiSelectorSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.UI_SELECTOR, 0, mLockscreenUserManager.getCurrentUserId());
+        try {
+            switch (uiSelectorSetting) {
+                case 0: om.setEnabled("org.descendant.UI.android.roundier", false, userId);
+                        om.setEnabled("org.descendant.UI.system.roundier", false, userId);
+                        om.setEnabled("org.descendant.UI.android.square", false, userId);
+                        om.setEnabled("org.descendant.UI.system.square", false, userId);
+                        break;
+                case 1: om.setEnabled("org.descendant.UI.android.roundier", false, userId);
+                        om.setEnabled("org.descendant.UI.system.roundier", false, userId);
+                        om.setEnabled("org.descendant.UI.android.square", true, userId);
+                        om.setEnabled("org.descendant.UI.system.square", true, userId);
+                        break;
+                case 2: om.setEnabled("org.descendant.UI.android.roundier", true, userId);                                  
+                        om.setEnabled("org.descendant.UI.system.roundier", true, userId);
+                        om.setEnabled("org.descendant.UI.android.square", false, userId);
+                        om.setEnabled("org.descendant.UI.system.square", false, userId);
+                        break;
+            }
+        } catch (RemoteException e) {
+            Log.w(TAG, "Can't change UI!", e);
+        }
+    }
+
+    /**
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
@@ -5416,6 +5445,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ICON_SELECTOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_SELECTOR),
+                    false, this, UserHandle.USER_ALL);            
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
                     false, this, UserHandle.USER_ALL);
@@ -5446,6 +5478,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.System.ICON_SELECTOR))) {
                 systemIconSwitcher();
+           } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.System.UI_SELECTOR))) {
+                uiSelector(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP))) {
                 setUseLessBoringHeadsUp();
@@ -5463,6 +5498,7 @@ public class StatusBar extends SystemUI implements DemoMode,
              setFpToDismissNotifications();
              setUseLessBoringHeadsUp();
              systemIconSwitcher();
+             uiSelector(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
              setFpTapToShoot();
         }
     }
