@@ -3154,9 +3154,13 @@ public class BatteryStatsImpl extends BatteryStats {
     }
 
     private void readHistoryTag(int index, HistoryTag tag) {
+        try {
         tag.string = mReadHistoryStrings[index];
         tag.uid = mReadHistoryUids[index];
         tag.poolIdx = index;
+        } catch (Exception e) { 
+            Log.w(TAG, "We're somehow crashing but we dunno why.", e);
+        }
     }
 
     /*
