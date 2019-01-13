@@ -4083,6 +4083,8 @@ public final class Settings {
             }
         };
 
+        /** Descendant personalization start **/
+
         /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
@@ -4120,6 +4122,12 @@ public final class Settings {
          /** @hide */
         private static final Validator DESCENDANT_USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR =
                 BOOLEAN_VALIDATOR;
+
+        /**
+         * Wether navigation bar is enabled or not
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_SHOW = "navigation_bar_show";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
