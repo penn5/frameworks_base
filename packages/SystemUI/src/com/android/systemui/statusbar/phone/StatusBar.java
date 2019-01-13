@@ -140,6 +140,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.ThemeAccentUtils;
+import com.android.internal.statusbar.DescendantThemerUtility;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.MessagingGroup;
 import com.android.internal.widget.MessagingMessage;
@@ -3934,6 +3935,16 @@ public class StatusBar extends SystemUI implements DemoMode,
         Trace.endSection();
     }
 
+
+    /**
+     * systemIconSwitcher
+     */
+
+    protected void systemIconSwitcher() {
+         int iconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.SYSTEM_ICON_SWITCHER, 0, mLockscreenUserManager.getCurrentUserId());
+         DescendantThemerUtility.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), iconThemeSetting, ICON_THEME);
+    }
+
     /**
      * Switches theme from light to dark and vice-versa.
      */
@@ -5178,18 +5189,24 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVIGATION_BAR_SHOW), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_ICON_SWITCHER), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.ACCENT_PICKER))) {
+            if (uri.equals(Settings.System.getUriFor(Settings.System.ACCENT_PICKER))) {
                 unloadAccents();
                 updateAccents();
+            } else if (uri.equals(Settings.Secure.getUriFor(Settings.System.SYSTEM_ICON_SWITCHER))) {
+                systemIconSwitcher();
             }
         }
 
         public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            systemIconSwitcher();
         }
     }
 

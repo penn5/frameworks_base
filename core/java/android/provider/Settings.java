@@ -4130,6 +4130,16 @@ public final class Settings {
         public static final String NAVIGATION_BAR_SHOW = "navigation_bar_show";
 
         /**
+         * 0 - default QS/settings icons
+         * 1 - Descendant default QS/settings icons
+         * 2 - square QS/settings icons
+         * 3 - "super bubble" QS/settings icons
+         * 4 - teardrop QS/settings icons
+         * @hide
+         */
+        public static final String SYSTEM_ICON_SWITCHER = "system_icon_switcher";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
