@@ -3946,6 +3946,15 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     /**
+     * uiThemeSwitcher
+     */
+
+    protected void uiThemeSwitcher() {
+         int uiThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.UI_SWITCHER, 0, mLockscreenUserManager.getCurrentUserId());
+         DescendantThemerUtility.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), uiThemeSetting, UI_THEME);
+    }                  
+
+    /**
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
@@ -5192,6 +5201,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEM_ICON_SWITCHER), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_SWITCHER), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -5201,12 +5213,15 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateAccents();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.System.SYSTEM_ICON_SWITCHER))) {
                 systemIconSwitcher();
+            } else if (uri.equals(Settings.Secure.getUriFor(Settings.System.UI_SWITCHER))) {
+                uiThemeSwitcher();
             }
         }
 
         public void update() {
             ContentResolver resolver = mContext.getContentResolver();
             systemIconSwitcher();
+            uiThemeSwitcher();
         }
     }
 

@@ -4140,6 +4140,15 @@ public final class Settings {
         public static final String SYSTEM_ICON_SWITCHER = "system_icon_switcher";
 
         /**
+         * 0 - default UI 
+         * 1 - roundier UI
+         * 2 - square UI
+         * @hide
+         */
+
+        public static final String UI_SWITCHER = "ui_switcher";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
