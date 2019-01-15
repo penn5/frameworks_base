@@ -918,6 +918,8 @@
 
     <!-- [CHAR_LIMIT=60] label for estimated remaining duration of battery when under a certain amount -->
     <string name="power_remaining_less_than_duration_only">Less than <xliff:g id="threshold">%1$s</xliff:g> remaining</string>
+    <!-- [CHAR_LIMIT=60] label for estimated remaining duration of battery when under a certain amount with the percentage -->
+    <string name="power_remaining_less_than_duration">Less than <xliff:g id="threshold">%1$s</xliff:g> remaining (<xliff:g id="level">%2$s</xliff:g>)</string>
 
     <!-- Used to let users know that they have more than some amount of battery life remaining with percentage. ex: 75% - more than 1 day remaining [CHAR LIMIT = 80] -->
     <string name="power_remaining_more_than_subtext">More than <xliff:g id="time_remaining">%1$s</xliff:g> remaining (<xliff:g id="level">%2$s</xliff:g>)</string>
