@@ -504,7 +504,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     WindowState mStatusBar = null;
     private final int[] mStatusBarHeightForRotation = new int[4];
     WindowState mNavigationBar = null;
-    boolean hasNavigationBar() = false;
+    boolean mHasNavigationBar = false;
     boolean mNavigationBarCanMove = false; // can the navigation bar ever move to the side?
     @NavigationBarPosition
     int mNavigationBarPosition = NAV_BAR_BOTTOM;
@@ -2472,7 +2472,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mNavigationBarCanMove = width != height && shortSizeDp < 600;
 
         // reflects original device state from config or build prop, regardless of user settings
-        hasNavigationBar() = DescendantUtils.deviceSupportNavigationBar(mContext);
+        mHasNavigationBar = DescendantUtils.deviceSupportNavigationBar(mContext);
 
         // For demo purposes, allow the rotation of the HDMI display to be controlled.
         // By default, HDMI locks rotation to landscape.
@@ -2572,7 +2572,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
 
             // navbar
-            hasNavigationBar() = DescendantUtils.deviceSupportNavigationBar(mContext);
+            mHasNavigationBar = DescendantUtils.deviceSupportNavigationBar(mContext);
 
     	    //Three Finger Gesture
             boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
@@ -4836,7 +4836,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateSystemUiVisibilityLw();
             }
 
-            if (!hasNavigationBar() && mUseGestureButton && mGestureButton != null) {
+            if (!mHasNavigationBar && mUseGestureButton && mGestureButton != null) {
                 mGestureButton.navigationBarPosition(displayWidth, displayHeight, displayRotation);
             }
         }
@@ -7398,7 +7398,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         outInsets.setEmpty();
 
         // Only navigation bar
-        if (hasNavigationBar()) {
+        if (mHasNavigationBar) {
             int position = navigationBarPosition(displayWidth, displayHeight, displayRotation);
             if (position == NAV_BAR_BOTTOM) {
                 outInsets.bottom = getNavigationBarHeight(displayRotation, mUiMode);
@@ -8724,7 +8724,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // overridden by qemu.hw.mainkeys in the emulator.
     @Override
     public boolean hasNavigationBar() {
-        return hasNavigationBar();
+        return mHasNavigationBar;
     }
 
     @Override
