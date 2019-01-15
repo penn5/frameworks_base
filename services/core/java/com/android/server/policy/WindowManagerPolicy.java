@@ -1786,6 +1786,11 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
     boolean setAodShowing(boolean aodShowing);
 
     /**
+     * Send some ActionHandler commands to WindowManager.
+     */
+    public void sendCustomAction(Intent intent);
+
+    /**
      * Check if gesture navigation is enable.
      *
      * @return true if enable; false otherwise.

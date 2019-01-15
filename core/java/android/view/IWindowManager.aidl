@@ -438,6 +438,11 @@ interface IWindowManager
     void dontOverrideDisplayInfo(int displayId);
 
     /**
+     * Send some ActionHandler commands to WindowManager.
+     */
+    void sendCustomAction(in Intent intent);
+
+    /**
     * Booleans used for Gestures
     */
     boolean isGestureButtonEnabled();
