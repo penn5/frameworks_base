@@ -3962,7 +3962,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      */
 
     protected void systemIconSwitcher() {
-         int iconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.SYSTEM_ICON_SWITCHER, 0, mLockscreenUserManager.getCurrentUserId());
+         int iconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.ICON_THEME, 0, mLockscreenUserManager.getCurrentUserId());
          DescendantThemerUtility.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), iconThemeSetting, ICON_THEME);
     }
 
@@ -3971,7 +3971,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      */
 
     protected void uiThemeSwitcher() {
-         int uiThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.UI_SWITCHER, 0, mLockscreenUserManager.getCurrentUserId());
+         int uiThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.UI_THEME, 0, mLockscreenUserManager.getCurrentUserId());
          DescendantThemerUtility.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), uiThemeSetting, UI_THEME);
     }                  
 

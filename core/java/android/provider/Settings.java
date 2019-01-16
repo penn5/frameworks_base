@@ -4135,7 +4135,7 @@ public final class Settings {
          * 4 - teardrop QS/settings icons
          * @hide
          */
-        public static final String SYSTEM_ICON_SWITCHER = "system_icon_switcher";
+        public static final String ICON_THEME = "ICON_THEME";
 
         /**
          * 0 - default UI 
@@ -4144,7 +4144,7 @@ public final class Settings {
          * @hide
          */
 
-        public static final String UI_SWITCHER = "ui_switcher";
+        public static final String UI_THEME = "ui_theme";
 
         /** Whether to skip music track with volume rocker 
         /**
