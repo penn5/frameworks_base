@@ -101,8 +101,7 @@ public class KeyguardHostView extends FrameLayout implements SecurityCallback {
         @Override
         public void onTrustChanged(int userId) {
             if (userId != KeyguardUpdateMonitor.getCurrentUser()) return;
-            if (mKeyguardUpdateMonitor.getFaceUnlockRunning(userId) || mKeyguardUpdateMonitor.getUserCanSkipBouncer(userId)
-                && mKeyguardUpdateMonitor.getUserHasTrust(userId) && mFaceAuto) {
+             if (mKeyguardUpdateMonitor.getUserCanSkipBouncer(userId) && mKeyguardUpdateMonitor.getUserHasTrust(userId) && mKeyguardUpdateMonitor.isFaceTrusted()){
                 dismiss(false, userId);
             }
         }
