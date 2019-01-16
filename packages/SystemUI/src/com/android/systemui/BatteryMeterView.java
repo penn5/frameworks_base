@@ -308,7 +308,6 @@ public class BatteryMeterView extends LinearLayout implements
                 }
                 mDrawable.setShowPercent(false);
                 break;
->>>>>>> f2914d2d0c6... BatteryMeterDrawable: Add battery styles
         }
 
         if (mBatteryPercentView != null) {

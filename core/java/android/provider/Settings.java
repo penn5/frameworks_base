@@ -4191,6 +4191,16 @@ public final class Settings {
         public static final String RECENTS_ICON_PACK = "recents_icon_pack";
 
         /**
+         * 0 - default QS/settings icons
+         * 1 - Descendant default QS/settings icons
+         * 2 - square QS/settings icons
+         * 3 - "super bubble" QS/settings icons
+         * 4 - teardrop QS/settings icons
+         * @hide
+         */
+        public static final String ICON_SELECTOR = "icon_selector";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

@@ -26,7 +26,7 @@ import com.android.internal.util.descendant.Utils;
 
 public class DescendantThemerUtility {
 
-    public static final String TAG = "DescendantThemerUtility"
+    public static final String TAG = "DescendantThemerUtility";
 
     private enum ThemeType {
         UI_THEME, ICON_THEME 

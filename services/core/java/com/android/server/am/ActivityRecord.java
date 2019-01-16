@@ -2426,7 +2426,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
     // TODO(b/36505427): Consider moving this method and similar ones to ConfigurationContainer.
     private void computeBounds(Rect outBounds) {
         outBounds.setEmpty();
-        final float maxAspectRatio = info.maxAspectRatio;
+        float maxAspectRatio = info.maxAspectRatio;
 
         if (service.mWindowManager.isGestureButtonEnabled()) {
             return;
