@@ -50,9 +50,9 @@ public class DescendantThemerUtility {
         "org.descendant.settings.square.overlay"
     };
 
-    public static void omniSet(IOverlayManager om, int userId, int setting, ThemeType themeType) { 
+    public static void omniSet(IOverlayManager om, int userId, int setting, ThemeType themeType, Context context) { 
         String[] themes;
-        if (themeType == UI_THEME) {
+        if (themeType == ThemeType.UI_THEME) {
             themes = uiThemes;
         } else {
             themes = iconThemes;
@@ -60,24 +60,24 @@ public class DescendantThemerUtility {
 
         switch (setting) {
             case 0:
-                omniUnset(om, userId, themeType);
+                omniUnset(om, userId, themeType, context);
                 break;
             case 1:
                 om.setEnabled(themes[setting], true, userId);
                 om.setEnabled(themes[setting + 1], true, userId);
-                if (themeType == UI_THEME) {
-                    Utils.showSystemUiRestartDialog(mContext);
+                if (themeType == ThemeType.UI_THEME) {
+                    Utils.showSystemUiRestartDialog(context);
                 }
                 break;
             case 2:
                 om.setEnabled(themes[setting+1], true, userId);
                 om.setEnabled(themes[setting+2], true, userId);
-                if (themeType == UI_THEME) {
-                    Utils.showSystemUiRestartDialog(mContext);
+                if (themeType == ThemeType.UI_THEME) {
+                    Utils.showSystemUiRestartDialog(context);
                 }
                 break;
             case 3:
-                if (themeType == ICON_THEME) {
+                if (themeType == ThemeType.ICON_THEME) {
                     om.setEnabled(themes[setting + 1], true, userId);
                     om.setEnabled(themes[setting + 2], true, userId);
                 }
@@ -85,8 +85,9 @@ public class DescendantThemerUtility {
             default:
                 break;
         }
-
-    public static void omniUnset(IOverlayManager om, int userId, int setting, ThemeType themeType) { 
+    }
+    
+    public static void omniUnset(IOverlayManager om, int userId, ThemeType themeType, Context context) { 
         switch (themeType) {
             case UI_THEME: 
                 for (String uiTheme : uiThemes) {
@@ -96,13 +97,13 @@ public class DescendantThemerUtility {
                         e.printStackTrace();
                     }
                 }
-                DescendantUtils.showSystemUiRestartDialog(mContext);
+                Utils.showSystemUiRestartDialog(context);
                 break;
 
             case ICON_THEME: 
                 for (String iconTheme : iconThemes) {
                     try {
-                        om.setEnabled(iconThemes, false, userId);
+                        om.setEnabled(iconTheme, false, userId);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -113,4 +114,3 @@ public class DescendantThemerUtility {
         }
     }
 }
-

@@ -139,6 +139,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.internal.statusbar.DescendantThemerUtility;
 import com.android.internal.statusbar.ThemeAccentUtils;
 import com.android.internal.statusbar.DescendantThemerUtility;
 import com.android.internal.widget.LockPatternUtils;
@@ -5107,7 +5108,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private void updateNavigationBar() {
-        mShowNavBar = DescendantUtils.deviceSupportNavigationBarForUser(mContext,
+        mShowNavBar = Utils.deviceSupportNavigationBarForUser(mContext,
                               mLockscreenUserManager.getCurrentUserId());
         if (mShowNavBar) {
             if (mNavigationBarView == null) {
