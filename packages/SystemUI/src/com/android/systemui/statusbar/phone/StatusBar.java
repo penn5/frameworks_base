@@ -142,7 +142,6 @@ import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.DescendantThemerUtility;
 import com.android.internal.statusbar.ThemeAccentUtils;
 import com.android.internal.statusbar.DescendantThemerUtility;
-import com.android.internal.utils.descendant.Utils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.MessagingGroup;
 import com.android.internal.widget.MessagingMessage;
