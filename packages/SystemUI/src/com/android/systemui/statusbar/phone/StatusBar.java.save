@@ -136,8 +136,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.statusbar.DescendantThemeUtil;
-import com.android.internal.statusbar.DescendantThemeUtil.ThemeType;
+import com.android.internal.statusbar.DescendantThemeUtils;
+import com.android.internal.statusbar.DescendantThemeUtils.ThemeType;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
@@ -3970,24 +3970,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     /**
      * systemIconSwitcher
      */
-
     protected void systemIconSwitcher() {
-         int iconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.SYSTEM_ICON_SWITCHER, 
-                                                              0, mLockscreenUserManager.getCurrentUserId());
+         int iconThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                                Settings.System.SYSTEM_ICON_SWITCHER, 0, mLockscreenUserManager.getCurrentUserId());
          DescendantThemeUtils.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), 
-                                      iconThemeSetting, ThemeType.ICON_THEME);
+                                          iconThemeSetting, ThemeType.ICON_THEME, mContext);
     }
-
-    /**
-     * uiThemeSwitcher
-     */
-
-    protected void uiThemeSwitcher() {
-         int uiThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),Settings.System.UI_SWITCHER, 
-                                                            0, mLockscreenUserManager.getCurrentUserId());
-         DescendantThemeUtils.omniSet(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), 
-                                      uiThemeSetting, ThemeType.UI_THEME);
-    }  
 
     /**
      * Switches theme from light to dark and vice-versa.
@@ -5279,12 +5267,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_CLOCK_SELECTION),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SYSTEM_ICON_SWITCHER), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.UI_SWITCHER), false, this,
-                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -5321,10 +5303,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setForceAmbient();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK_SELECTION))) {
                 updateKeyguardStatusSettings();
-            } else if (uri.equals(Settings.Secure.getUriFor(Settings.System.SYSTEM_ICON_SWITCHER))) {
-                systemIconSwitcher();
-            } else if (uri.equals(Settings.Secure.getUriFor(Settings.System.UI_SWITCHER))) {
-                uiSwitcher();
+            }
         }
 
         public void update() {
@@ -5336,9 +5315,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setUseLessBoringHeadsUp();
             setForceAmbient();
             updateKeyguardStatusSettings();
-            systemIconSwitcher();
-            uiSwitcher(); 
-       }
+        }
     }
 
     private void updateKeyguardStatusSettings() {
