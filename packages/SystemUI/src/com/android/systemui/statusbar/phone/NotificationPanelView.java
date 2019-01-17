@@ -53,7 +53,7 @@ import android.widget.FrameLayout;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.du.Utils;
+import com.android.internal.util.descendant.Utils;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.Dependency;
@@ -1282,12 +1282,12 @@ public class NotificationPanelView extends PanelView implements
         }
     };
 
-    private void animateKeyguardStatusBarIn(long duration) {
+    private void animateKeyguardStatusBarIn(long descendantration) {
         mKeyguardStatusBar.setVisibility(View.VISIBLE);
         mKeyguardStatusBar.setAlpha(0f);
         ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
         anim.addUpdateListener(mStatusBarAnimateAlphaListener);
-        anim.setDuration(duration);
+        anim.setDuration(descendantration);
         anim.setInterpolator(Interpolators.LINEAR_OUT_SLOW_IN);
         anim.start();
     }
@@ -1519,7 +1519,7 @@ public class NotificationPanelView extends PanelView implements
             return;
         }
 
-        // If we move in the opposite direction, reset velocity and use a different duration.
+        // If we move in the opposite direction, reset velocity and use a different descendantration.
         boolean oppositeDirection = false;
         if (vel > 0 && !expand || vel < 0 && expand) {
             vel = 0;
@@ -1779,7 +1779,7 @@ public class NotificationPanelView extends PanelView implements
 
     /**
      * @return the alpha to be used to fade out the contents on Keyguard (status bar, bottom area)
-     *         during swiping up
+     *         descendantring swiping up
      */
     private float getKeyguardContentsAlpha() {
         float alpha;
@@ -1817,7 +1817,7 @@ public class NotificationPanelView extends PanelView implements
         // • User dragging up to unlock: we want to fade out as quick as possible
         //   (ALPHA_EXPANSION_THRESHOLD) to avoid seeing the bouncer over the bottom area.
         // • User tapping on lock screen: bouncer won't be visible but panel expansion will
-        //   change due to "unlock hint animation." In this case, fading out the bottom area
+        //   change descendante to "unlock hint animation." In this case, fading out the bottom area
         //   would also hide the message that says "swipe to unlock," we don't want to do that.
         float expansionAlpha = MathUtils.map(isUnlockHintRunning()
                         ? 0 : KeyguardBouncer.ALPHA_EXPANSION_THRESHOLD, 1f,

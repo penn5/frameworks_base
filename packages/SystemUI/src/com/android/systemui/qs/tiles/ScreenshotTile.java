@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 ABC rom
+ * Copyright (C) 2017 DESCENDANT_SETTINGS rom
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
-import com.android.internal.util.du.Utils;
+import com.android.internal.util.descendant.Utils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -41,7 +41,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ABC;
+        return MetricsEvent.DESCENDANT_SETTINGS;
     }
 
     @Override

@@ -287,7 +287,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
-import com.android.internal.util.du.Utils;
+import com.android.internal.util.descendant.Utils;
 import com.android.internal.widget.PointerLocationView;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
@@ -310,7 +310,7 @@ import java.util.List;
 
 /**
  * WindowManagerPolicy implementation for the Android phone UI.  This
- * introduces a new method suffix, Lp, for an internal lock of the
+ * introdescendantces a new method suffix, Lp, for an internal lock of the
  * PhoneWindowManager.  This is used to protect some internal state, and
  * can be acquired with either the Lw and Li lock held, so has the restrictions
  * of both of those when held.
@@ -497,7 +497,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Vibrator pattern for a short vibration when tapping on a day/month/year date of a Calendar.
     long[] mCalendarDateVibePattern;
 
-    // Vibrator pattern for haptic feedback during boot when safe mode is enabled.
+    // Vibrator pattern for haptic feedback descendantring boot when safe mode is enabled.
     long[] mSafeModeEnabledVibePattern;
 
     /** If true, hitting shift & menu will broadcast Intent.ACTION_BUG_REPORT */
@@ -555,7 +555,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // so that only one thread is involved in handling input policy.  Unfortunately
     // it's on a critical path for power management so we can't just post the work to the
     // handler thread.  We'll need to resolve this someday by teaching the input dispatcher
-    // to hold wakelocks during dispatch and eliminating the critical path.
+    // to hold wakelocks descendantring dispatch and eliminating the critical path.
     volatile boolean mPowerKeyHandled;
     volatile boolean mBackKeyHandled;
     volatile boolean mBeganFromNonInteractive;
@@ -806,11 +806,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean mBugreportTvKey1Pressed;
     private boolean mBugreportTvKey2Pressed;
-    private boolean mBugreportTvScheduled;
+    private boolean mBugreportTvSchedescendantled;
 
     private boolean mAccessibilityTvKey1Pressed;
     private boolean mAccessibilityTvKey2Pressed;
-    private boolean mAccessibilityTvScheduled;
+    private boolean mAccessibilityTvSchedescendantled;
 
     /* The number of steps between min and max brightness */
     private static final int BRIGHTNESS_STEPS = 10;
@@ -1351,7 +1351,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // If sensor is turned off or nonexistent for some reason
             return;
         }
-        // Could have been invoked due to screen turning on or off or
+        // Could have been invoked descendante to screen turning on or off or
         // change of the currently visible window's orientation.
         if (localLOGV) Slog.v(TAG, "mScreenOnEarly=" + mScreenOnEarly
                 + ", mAwake=" + mAwake + ", mCurrentAppOrientation=" + mCurrentAppOrientation
@@ -1640,7 +1640,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void powerPress(long eventTime, boolean interactive, int count) {
         if (!isDozeMode() && mScreenOnEarly && !mScreenOnFully) {
-            Slog.i(TAG, "Suppressed redundant power key press while "
+            Slog.i(TAG, "Suppressed redescendantndant power key press while "
                     + "already in the process of turning the screen on.");
             return;
         }
@@ -2407,10 +2407,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         }
                     }
                     @Override
-                    public void onFling(int duration) {
+                    public void onFling(int descendantration) {
                         if (mPowerManagerInternal != null) {
                             mPowerManagerInternal.powerHint(
-                                    PowerHint.INTERACTION, duration);
+                                    PowerHint.INTERACTION, descendantration);
                         }
                     }
                     @Override
@@ -2474,14 +2474,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mWindowManagerInternal.registerAppTransitionListener(new AppTransitionListener() {
             @Override
             public int onAppTransitionStartingLocked(int transit, IBinder openToken,
-                    IBinder closeToken, long duration, long statusBarAnimationStartTime,
+                    IBinder closeToken, long descendantration, long statusBarAnimationStartTime,
                     long statusBarAnimationDuration) {
-                return handleStartTransitionForKeyguardLw(transit, duration);
+                return handleStartTransitionForKeyguardLw(transit, descendantration);
             }
 
             @Override
             public void onAppTransitionCancelledLocked(int transit) {
-                handleStartTransitionForKeyguardLw(transit, 0 /* duration */);
+                handleStartTransitionForKeyguardLw(transit, 0 /* descendantration */);
             }
         });
         mKeyguardDelegate = new KeyguardServiceDelegate(mContext,
@@ -4297,18 +4297,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         if (mBugreportTvKey1Pressed && mBugreportTvKey2Pressed) {
-            if (!mBugreportTvScheduled) {
-                mBugreportTvScheduled = true;
+            if (!mBugreportTvSchedescendantled) {
+                mBugreportTvSchedescendantled = true;
                 Message msg = Message.obtain(mHandler, MSG_BUGREPORT_TV);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageDelayed(msg, BUGREPORT_TV_GESTURE_TIMEOUT_MILLIS);
             }
-        } else if (mBugreportTvScheduled) {
+        } else if (mBugreportTvSchedescendantled) {
             mHandler.removeMessages(MSG_BUGREPORT_TV);
-            mBugreportTvScheduled = false;
+            mBugreportTvSchedescendantled = false;
         }
 
-        return mBugreportTvScheduled;
+        return mBugreportTvSchedescendantled;
     }
 
     /**
@@ -4323,18 +4323,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         if (mAccessibilityTvKey1Pressed && mAccessibilityTvKey2Pressed) {
-            if (!mAccessibilityTvScheduled) {
-                mAccessibilityTvScheduled = true;
+            if (!mAccessibilityTvSchedescendantled) {
+                mAccessibilityTvSchedescendantled = true;
                 Message msg = Message.obtain(mHandler, MSG_ACCESSIBILITY_TV);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageDelayed(msg, getAccessibilityShortcutTimeout());
             }
-        } else if (mAccessibilityTvScheduled) {
+        } else if (mAccessibilityTvSchedescendantled) {
             mHandler.removeMessages(MSG_ACCESSIBILITY_TV);
-            mAccessibilityTvScheduled = false;
+            mAccessibilityTvSchedescendantled = false;
         }
 
-        return mAccessibilityTvScheduled;
+        return mAccessibilityTvSchedescendantled;
     }
 
     private void requestFullBugreport() {
@@ -4453,7 +4453,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
-    private int handleStartTransitionForKeyguardLw(int transit, long duration) {
+    private int handleStartTransitionForKeyguardLw(int transit, long descendantration) {
         if (mKeyguardOccludedChanged) {
             if (DEBUG_KEYGUARD) Slog.d(TAG, "transition/occluded changed occluded="
                     + mPendingKeyguardOccluded);
@@ -4464,7 +4464,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         if (AppTransition.isKeyguardGoingAwayTransit(transit)) {
             if (DEBUG_KEYGUARD) Slog.d(TAG, "Starting keyguard exit animation");
-            startKeyguardExitAnimation(SystemClock.uptimeMillis(), duration);
+            startKeyguardExitAnimation(SystemClock.uptimeMillis(), descendantration);
         }
         return 0;
     }
@@ -4492,7 +4492,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void launchAssistAction(String hint, int deviceId) {
         sendCloseSystemWindows(SYSTEM_DIALOG_REASON_ASSIST);
         if (!isUserSetupComplete()) {
-            // Disable opening assist window during setup
+            // Disable opening assist window descendantring setup
             return;
         }
         Bundle args = null;
@@ -6302,7 +6302,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mContext.bindServiceAsUser(
                     intent, conn, Context.BIND_AUTO_CREATE, UserHandle.CURRENT)) {
                 mScreenrecordConnection = conn;
-                // Screenrecord max duration is 30 minutes. Allow 32 minutes before killing
+                // Screenrecord max descendantration is 30 minutes. Allow 32 minutes before killing
                 // the service.
                 mHandler.postDelayed(mScreenrecordTimeout, 32 * 60 * 1000);
             }
@@ -6529,10 +6529,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         boolean notHandledMusicControl = false;
                         if (down) {
                             if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                                scheduleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+                                schedescendantleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                                 break;
                             } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                                scheduleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
+                                schedescendantleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
                                 break;
                             }
                         } else {
@@ -7094,7 +7094,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         public void run() {
             synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
                 if (!isUserSetupComplete()) {
-                    // Swipe-up for navigation bar is disabled during setup
+                    // Swipe-up for navigation bar is disabled descendantring setup
                     return;
                 }
                 mPendingPanicGestureUptime = SystemClock.uptimeMillis();
@@ -7108,7 +7108,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void requestTransientBars(WindowState swipeTarget) {
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
             if (!isUserSetupComplete()) {
-                // Swipe-up for navigation bar is disabled during setup
+                // Swipe-up for navigation bar is disabled descendantring setup
                 return;
             }
             boolean sb = mStatusBarController.checkShowTransientBarLw();
@@ -7673,7 +7673,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // Otherwise, use sensor only if requested by the application or enabled
                 // by default for USER or UNSPECIFIED modes.  Does not apply to NOSENSOR.
                 if (mAllowAllRotations < 0) {
-                    // Can't read this during init() because the context doesn't
+                    // Can't read this descendantring init() because the context doesn't
                     // have display metrics at that time so we cannot determine
                     // tablet vs. phone then.
                     mAllowAllRotations = mContext.getResources().getBoolean(
@@ -8991,7 +8991,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     @Override
-    public void dump(String prefix, PrintWriter pw, String[] args) {
+    public void descendantmp(String prefix, PrintWriter pw, String[] args) {
         pw.print(prefix); pw.print("mSafeMode="); pw.print(mSafeMode);
                 pw.print(" mSystemReady="); pw.print(mSystemReady);
                 pw.print(" mSystemBooted="); pw.println(mSystemBooted);
@@ -9168,29 +9168,29 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             pw.print(prefix);
             pw.print("mAccessibilityTvKey2Pressed="); pw.println(mAccessibilityTvKey2Pressed);
             pw.print(prefix);
-            pw.print("mAccessibilityTvScheduled="); pw.println(mAccessibilityTvScheduled);
+            pw.print("mAccessibilityTvSchedescendantled="); pw.println(mAccessibilityTvSchedescendantled);
         }
 
-        mGlobalKeyManager.dump(prefix, pw);
-        mStatusBarController.dump(pw, prefix);
-        mNavigationBarController.dump(pw, prefix);
-        PolicyControl.dump(prefix, pw);
+        mGlobalKeyManager.descendantmp(prefix, pw);
+        mStatusBarController.descendantmp(pw, prefix);
+        mNavigationBarController.descendantmp(pw, prefix);
+        PolicyControl.descendantmp(prefix, pw);
 
         if (mWakeGestureListener != null) {
-            mWakeGestureListener.dump(pw, prefix);
+            mWakeGestureListener.descendantmp(pw, prefix);
         }
         if (mOrientationListener != null) {
-            mOrientationListener.dump(pw, prefix);
+            mOrientationListener.descendantmp(pw, prefix);
         }
         if (mBurnInProtectionHelper != null) {
-            mBurnInProtectionHelper.dump(prefix, pw);
+            mBurnInProtectionHelper.descendantmp(prefix, pw);
         }
         if (mKeyguardDelegate != null) {
-            mKeyguardDelegate.dump(prefix, pw);
+            mKeyguardDelegate.descendantmp(prefix, pw);
         }
 
         pw.print(prefix); pw.println("Looper state:");
-        mHandler.getLooper().dump(new PrintWriterPrinter(pw), prefix + "  ");
+        mHandler.getLooper().descendantmp(new PrintWriterPrinter(pw), prefix + "  ");
     }
 
     private static String allowAllRotationsToString(int allowAll) {
@@ -9369,7 +9369,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return false;
     }
 
-    private void scheduleLongPressKeyEvent(int keyCode) {
+    private void schedescendantleLongPressKeyEvent(int keyCode) {
         Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_SKIP_TRACK, keyCode, 0);
         msg.setAsynchronous(true);
         mHandler.sendMessageDelayed(msg, ViewConfiguration.getLongPressTimeout());

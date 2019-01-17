@@ -60,7 +60,7 @@ import com.android.systemui.plugins.statusbar.phone.NavGesture.GestureHelper;
 import com.android.systemui.shared.recents.IOverviewProxy;
 import com.android.systemui.shared.recents.utilities.Utilities;
 import com.android.systemui.shared.system.NavigationBarCompat;
-import com.android.internal.util.du.Utils;
+import com.android.internal.util.descendant.Utils;
 
 /**
  * Class to detect gestures on the navigation bar and implement quick scrub.
@@ -92,7 +92,7 @@ public class QuickStepController implements GestureHelper {
     private ButtonDispatcher mHitTarget;
     private View mCurrentNavigationBarView;
 
-    private boolean mBackActionScheduled;
+    private boolean mBackActionSchedescendantled;
     private boolean isDoubleTapPending;
     private boolean wasConsumed;
     private static final int sDoubleTapTimeout = ViewConfiguration.getDoubleTapTimeout() - 100;
@@ -237,7 +237,7 @@ public class QuickStepController implements GestureHelper {
                 mNavigationBarView.transformMatrixToGlobal(mTransformGlobalMatrix);
                 mNavigationBarView.transformMatrixToLocal(mTransformLocalMatrix);
                 mQuickStepStarted = false;
-                mBackActionScheduled = false;
+                mBackActionSchedescendantled = false;
                 mAllowGestureDetection = true;
 
                 // don't check double tap or navbar home action or keyboard cursors action
@@ -269,7 +269,7 @@ public class QuickStepController implements GestureHelper {
                     boolean isDoubleTapReally = deltaX * deltaX + deltaY * deltaY < sDoubleTapSquare;
                     if (isDoubleTapReally) Utils.switchScreenOff(mContext);
                 } else {
-                    // this is the first tap, let's go further and schedule a
+                    // this is the first tap, let's go further and schedescendantle a
                     // mDoubleTapCancelTimeout call in the action up event so after the set time
                     // if we don't tap again the double tap check will be removed
                     wasConsumed = false;
@@ -337,8 +337,8 @@ public class QuickStepController implements GestureHelper {
                 // if quickscrub is active, don't trigger the back action but allow quickscrub drag
                 // action so the user can still switch apps
                 if (!mQuickScrubActive && exceededScrubTouchSlop && allowBackAction) {
-                    // schedule a back button action and skip quickscrub
-                     mBackActionScheduled = true;
+                    // schedescendantle a back button action and skip quickscrub
+                     mBackActionSchedescendantled = true;
                     break;
                 }
 
@@ -394,7 +394,7 @@ public class QuickStepController implements GestureHelper {
                         mPreviousUpEventX = (int)event.getX();
                         mPreviousUpEventY = (int)event.getY();
                     }
-                    if (mBackActionScheduled) {
+                    if (mBackActionSchedescendantled) {
                         endQuickScrub(true /* animate */);
                         Utils.sendKeycode(KeyEvent.KEYCODE_BACK, mHandler);
                         mNavigationBarView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -410,11 +410,11 @@ public class QuickStepController implements GestureHelper {
 
         // Proxy motion events to launcher if not handled by quick scrub
         // Proxy motion events up/cancel that would be sent after long press on any nav button
-        if (!mQuickScrubActive && (mAllowGestureDetection || mBackActionScheduled
+        if (!mQuickScrubActive && (mAllowGestureDetection || mBackActionSchedescendantled
                 || action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP)) {
             proxyMotionEvents(event);
         }
-        return mQuickScrubActive || mQuickStepStarted || deadZoneConsumed || mBackActionScheduled;
+        return mQuickScrubActive || mQuickStepStarted || deadZoneConsumed || mBackActionSchedescendantled;
     }
 
     private Runnable mDoubleTapCancelTimeout = new Runnable() {
