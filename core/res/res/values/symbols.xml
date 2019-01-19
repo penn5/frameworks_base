@@ -3419,4 +3419,6 @@
   <java-symbol type="string" name="config_misprovisionedBrandValue" />
 
   <java-symbol type="drawable" name="adaptive_icon_drawable_wrapper" />
+
+  <java-symbol type="string" name="config_defaultAssistantComponentName" />
 </resources>
